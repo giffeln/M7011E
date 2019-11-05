@@ -14,8 +14,13 @@ Starts the web app on port `8080`
 
 ### Copy files to container while running
 
+When running compose, the server uses nodemon which updates the website without restarting the service when code is changed.
+This means you need to copy the code to the container which is why I wrote this simple script.
+
 `./copy.sh`
 
 ### Build and run image
+
+This script first shuts down the current 
 
 `./build_docker.sh`
