@@ -21,6 +21,6 @@ This means you need to copy the code to the container which is why I wrote this 
 
 ### Build and run image
 
-This script first shuts down the current 
+This script first shuts down the current session of the image and then builds a new one and starts it.
 
 `./build_docker.sh`
