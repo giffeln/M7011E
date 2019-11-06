@@ -11,7 +11,7 @@ countys = {
     6 : "Halland",
     7 : "Hälsingland",
     8 : "Härjedalen",
-    9: "Jämtland",
+    9 : "Jämtland",
     10: "Lappland",
     11: "Medelpad",
     12: "Norrbotten",
@@ -32,9 +32,9 @@ countys = {
 class Simulation:
     base = 10.0
     modTime = {
-        0: 1,
-        4: 1,
-        8: 1,
+        0 : 1,
+        4 : 1,
+        8 : 1,
         12: 1,
         16: 1,
         20: 1
@@ -49,9 +49,9 @@ class Simulation:
         7 : 1,
         8 : 1,
         9 : 1,
-        10 : 1,
-        11 : 1,
-        12 : 1
+        10: 1,
+        11: 1,
+        12: 1
     }
     def __init__(self):
         super().__init__()
@@ -65,13 +65,11 @@ class Simulation:
         return self.base * self.modTime[hour] * self.modDate[month] * rand
         
 
-
 def main():
     time = datetime.datetime(2016, 1, 1, 0)
     sim = Simulation()
     for x in range(0, 25):
         energy = sim.get(x, time.hour, time.month)
         print(countys[x], "is using", "%.2f" % energy, "MW")
-
 
 main()
