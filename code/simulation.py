@@ -1,4 +1,4 @@
-from random import random
+import random
 import datetime
 
 countys = {
@@ -32,26 +32,26 @@ countys = {
 class Simulation:
     base = 10.0
     modTime = {
-        0 : 1,
-        4 : 1,
+        0 : 0.9,
+        4 : 0.8,
         8 : 1,
-        12: 1,
-        16: 1,
-        20: 1
+        12: 1.1,
+        16: 1.2,
+        20: 1.2
     }
     modDate = {
-        1 : 1,
-        2 : 1,
-        3 : 1,
+        1 : 1.2,
+        2 : 1.2,
+        3 : 1.1,
         4 : 1,
         5 : 1,
-        6 : 1,
-        7 : 1,
-        8 : 1,
+        6 : 0.9,
+        7 : 0.8,
+        8 : 0.9,
         9 : 1,
         10: 1,
-        11: 1,
-        12: 1
+        11: 1.1,
+        12: 1.1
     }
     def __init__(self):
         super().__init__()
@@ -61,7 +61,7 @@ class Simulation:
             hour = 0
         else:
             hour = hour - (hour%4)
-        rand = random() + 0.5
+        rand = random.uniform(0.8, 1.2)
         return self.base * self.modTime[hour] * self.modDate[month] * rand
         
 
