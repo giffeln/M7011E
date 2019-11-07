@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker cp code/* app_app_1:/home/node/app/
+docker cp ./code/*.js M7011E_app:/home/node/app/
