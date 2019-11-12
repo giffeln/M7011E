@@ -1,1 +1,2 @@
-website/postgres_data/
+website/mariadb_data/
+website/code/node_modules/
