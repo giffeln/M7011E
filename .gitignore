@@ -1,2 +1,3 @@
-website/mariadb_data/
-website/code/node_modules/
+website/db/mariadb-data/
+website/app/code/node_modules/
+sim/code/node_modules/

@@ -1,15 +1,12 @@
-CREATE TABLE IF NOT EXISTS "Users" (
-    "id" SERIAL,
-    "username" VARCHAR(255) NOT NULL,
-    "password" VARCHAR(255) NOT NULL,
-    "admin" BOOL NOT NULL,
-    CONSTRAINT Users_pk PRIMARY KEY ("id")
-);
-BEGIN
-   IF NOT EXISTS (SELECT * FROM Users 
-                   WHERE username = "admin")
-   BEGIN
-       INSERT INTO Users ("username", "password", "admin")
-       VALUES ("admin", "admin", true)
-   END
-END
+CREATE TABLE IF NOT EXISTS `web_db`.`Users` (
+  `idUsers` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `admin` TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`idUsers`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC),
+  UNIQUE INDEX `idUsers_UNIQUE` (`idUsers` ASC));
+
+INSERT INTO web_db.Users (username, password, admin) 
+  VALUES ("admin", "admin", 1) 
+  ON DUPLICATE KEY UPDATE idUsers=idUsers;
