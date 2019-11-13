@@ -17,26 +17,27 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.get('/', (req, res) => {
-  var table = query("SELECT * FROM Users");
-  res.send({"test": "test2"});
-  console.log(query("SELECT * FROM Users"));
+  query("SELECT * FROM Users").then((table) => {
+    res.send(table);
+  }).catch((err) => {
+    console.log(err);
+  })
 });
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
 
-async function query(sql, callback) {
-  let conn;
-  try {
-    conn = await pool.getConnection();
-    const rows = await conn.query(sql);
-    console.log(rows[0]);
-    conn.end;
-    return rows;
-  } catch (err) {
-    console.log(err)
-    throw err;
-  } finally {
-    if (conn) return conn.end;
-  }
+function query(sql) {
+  return new Promise(async (resolve, reject) => {
+    let conn;
+    try {
+      conn = await pool.getConnection();
+      var rows = await conn.query(sql);
+      resolve(rows);
+    } catch (err) {
+      reject(err)
+    } finally {
+      if (conn) conn.end;
+    }
+  })
 }
