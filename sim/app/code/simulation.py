@@ -1,5 +1,5 @@
-import random
-import datetime
+import random, time
+from datetime import datetime, timedelta
 
 countys = {
     0 : "Blekinge",
@@ -53,6 +53,7 @@ class Simulation:
         11: 1.1,
         12: 1.1
     }
+    
     def __init__(self):
         super().__init__()
 
@@ -61,15 +62,27 @@ class Simulation:
             hour = 0
         else:
             hour = hour - (hour%4)
-        rand = random.uniform(0.8, 1.2)
+        rand = random.uniform(0.9, 1.1)
         return self.base * self.modTime[hour] * self.modDate[month] * rand
         
 
 def main():
-    time = datetime.datetime(2016, 1, 1, 0)
+    year = 2019
+    month = 1
+    day = 1
+    hour = 0
     sim = Simulation()
-    for x in range(0, 25):
-        energy = sim.get(x, time.hour, time.month)
-        print(countys[x], "is using", "%.2f" % energy, "MW")
+    #for x in range(0, 25):
+    #    energy = sim.get(x, time.hour, time.month)
+    #    print(countys[x], "is using", "%.2f" % energy, "MW")
+    for y in range(0, 12):
+        for x in range(0, 24):
+            date = datetime(year, month, day, hour).strftime('%Y-%m-%d %H:%M')
+            energy = sim.get(0, hour, month)
+            print(date, "%.2f" % energy)
+            hour = hour + 1
+            time.sleep(2)
+        hour = 0
+        month = month + 1
 
 main()

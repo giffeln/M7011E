@@ -1,8 +1,54 @@
 version: "3.3"
 
 services: 
-  app:
-    build: .
-    command: nodemon app.js
+  web_app:
+    build: ./website/app
+    command: node app.js
+    container_name: M7011E_web_app
     ports: 
       - "8080:8080"
+    networks: 
+      - web_network
+    depends_on:
+      - web_db
+  web_db:
+    build: ./website/db
+    container_name: M7011E_web_db
+    networks: 
+      - web_network
+    hostname: web_db
+    environment:
+      MYSQL_ROOT_PASSWORD: node
+      MYSQL_DATABASE: web_db
+      MYSQL_USER: node
+      MYSQL_PASSWORD: node
+    volumes:
+      - ./website/db/mariadb-data:/var/lib/mysql
+  sim_app:
+    build: ./sim/app
+    command: node app.js
+    container_name: M7011E_sim_app
+    ports: 
+      - "8081:8080"
+    networks: 
+      - sim_network
+    depends_on:
+      - sim_db
+  sim_db:
+    build: ./sim/db
+    container_name: M7011E_sim_db
+    networks: 
+      - sim_network
+    hostname: sim_db
+    environment:
+      MYSQL_ROOT_PASSWORD: node
+      MYSQL_DATABASE: sim_db
+      MYSQL_USER: node
+      MYSQL_PASSWORD: node
+    volumes:
+      - ./sim/db/mariadb-data:/var/lib/mysql
+networks: 
+  web_network:
+    driver: bridge
+  sim_network:
+    driver: bridge
