@@ -1,0 +1,16 @@
+version: "3.3"
+
+services: 
+  db:
+    build: .
+    container_name: M7011E_db2
+    ports:
+      - "3306:3306"
+    hostname: db
+    environment:
+      MYSQL_ROOT_PASSWORD: node
+      MYSQL_DATABASE: sim_db
+      MYSQL_USER: node
+      MYSQL_PASSWORD: node
+    volumes:
+      - ./mariadb-data:/var/lib/mysql

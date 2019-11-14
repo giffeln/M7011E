@@ -22,9 +22,12 @@ services:
       - db_network
     hostname: db
     environment:
-      INFLUXDB_DB: energy
+      MYSQL_ROOT_PASSWORD: node
+      MYSQL_DATABASE: sim_db
+      MYSQL_USER: node
+      MYSQL_PASSWORD: node
     volumes:
-      - ./db/influxdb-data:/var/lib/mysql
+      - ./db/mariadb-data:/var/lib/mysql
 networks: 
   db_network:
     driver: bridge
