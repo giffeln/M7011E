@@ -12,6 +12,8 @@
     },
     "dependencies": {
       "express": "^4.16.1",
-      "mariadb": "latest"
+      "mariadb": "latest",
+      "distributions-normal": "latest",
+      "chanse": "latest"
     }
   }

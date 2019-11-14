@@ -11,6 +11,8 @@ var mu = 3.12,
 var vec = new Array( 100 ),
     len = vec.length,
     inc;
+
+var statArr = new Array();
  
 inc = ( xHigh - xLow ) / len;
  
@@ -21,6 +23,12 @@ for ( var i = 0; i < len; i++ ) {
 var map = new Array(100);
 for ( var i = 0; i < len; i++ ) {
     map[ i ] = inc*i + xLow;
+}
+
+for(value in vec){
+    for(i=0;i<(value*1000).ceil();i++){
+        statArr.push(value);
+    }
 }
 
 var normal = createDist()
