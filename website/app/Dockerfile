@@ -1,11 +1,10 @@
-FROM node:13.0.1-alpine
+FROM node:latest
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 WORKDIR /home/node/app
-COPY package*.json ./
 RUN npm install -g nodemon
 USER node
+COPY --chown=node:node ./code/ .
 RUN npm install
 WORKDIR /home/node/app
-COPY --chown=node:node ./code/* .
 EXPOSE 8080
 CMD [ "node", "app.js"]

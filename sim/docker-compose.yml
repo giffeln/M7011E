@@ -4,7 +4,7 @@ services:
   app:
     build: ./app
     command: nodemon app.js
-    container_name: M7011E_app
+    container_name: M7011E_sim
     ports: 
       - "8080:8080"
     networks: 
@@ -15,15 +15,15 @@ services:
       - db
   db:
     build: ./db
-    container_name: M7011E_db
+    container_name: M7011E_db2
     ports:
-      - "3306:3306"
+      - "8086:8086"
     networks: 
       - db_network
     hostname: db
     environment:
       MYSQL_ROOT_PASSWORD: node
-      MYSQL_DATABASE: web_db
+      MYSQL_DATABASE: sim_db
       MYSQL_USER: node
       MYSQL_PASSWORD: node
     volumes:

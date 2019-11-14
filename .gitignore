@@ -1,1 +1,4 @@
-postgress_data
+website/db/mariadb-data/
+website/app/code/node_modules/
+sim/app/code/node_modules/
+sim/db/mariadb-data/
