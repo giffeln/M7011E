@@ -8,5 +8,5 @@
 | 2019-11-12 | 3 | Database in docker, changed database but it wasn't the problem |
 | 2019-11-12 | 2 | Connect NodeJS to database, problem with promises |
 | 2019-11-13 | 2 | Can now query first database from NodeJS |
-| 2019-11-14 | 1 | Trying to automagically update app on server after it push|
+| 2019-11-14 | 1 | Trying to automagically update app on server after push|
 | 2019-11-14 | 4 | Automatic updates and all containers works |
