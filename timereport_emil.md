@@ -9,3 +9,4 @@
 | 2019-11-12 | 2 | Connect NodeJS to database, problem with promises |
 | 2019-11-13 | 2 | Can now query first database from NodeJS |
 | 2019-11-14 | 1 | Trying to automagically update app on server after it push|
+| 2019-11-14 | 4 | Automatic updates and all containers works |
