@@ -1,0 +1,33 @@
+version: "3.3"
+
+services: 
+  app:
+    build: ./app
+    command: nodemon app.js
+    container_name: M7011E_app
+    ports: 
+      - "8080:8080"
+    networks: 
+      - db_network
+    volumes:
+      - ./app/code:/home/node/app
+    depends_on:
+      - db
+  db:
+    build: ./db
+    container_name: M7011E_db
+    ports:
+      - "3306:3306"
+    networks: 
+      - db_network
+    hostname: db
+    environment:
+      MYSQL_ROOT_PASSWORD: node
+      MYSQL_DATABASE: web_db
+      MYSQL_USER: node
+      MYSQL_PASSWORD: node
+    volumes:
+      - ./db/mariadb-data:/var/lib/mysql
+networks: 
+  db_network:
+    driver: bridge
