@@ -1,10 +1,10 @@
-CREATE TABLE `sim_db`.`Estates` (
+CREATE TABLE IF NOT EXISTS `sim_db`.`Estates` (
   `idEstates` INT NOT NULL AUTO_INCREMENT,
   `size` INT NOT NULL DEFAULT 0,
   `people` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`idEstates`));
 
-CREATE TABLE `sim_db`.`Consumption` (
+CREATE TABLE IF NOT EXISTS `sim_db`.`Consumption` (
   `idConsumption` INT NOT NULL AUTO_INCREMENT,
   `estate` INT NULL,
   `value` FLOAT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE `sim_db`.`Consumption` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE TABLE `sim_db`.`Production` (
+CREATE TABLE IF NOT EXISTS `sim_db`.`Production` (
   `idProduction` INT NOT NULL AUTO_INCREMENT,
   `value` FLOAT NOT NULL,
   `estate` INT NULL,
