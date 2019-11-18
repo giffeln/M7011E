@@ -10,3 +10,4 @@
 | 2019-11-13 | 2 | Can now query first database from NodeJS |
 | 2019-11-14 | 1 | Trying to automagically update app on server after push|
 | 2019-11-14 | 4 | Automatic updates and all containers works |
+| 2019-11-18 | 3 | Broke and fixed docker, research REST and POST parameters with nodeJS |
