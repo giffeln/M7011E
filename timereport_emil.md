@@ -11,3 +11,5 @@
 | 2019-11-14 | 1 | Trying to automagically update app on server after push|
 | 2019-11-14 | 4 | Automatic updates and all containers works |
 | 2019-11-18 | 3 | Broke and fixed docker, research REST and POST parameters with nodeJS |
+| 2019-11-22 | 3 | API stuff |
+| 2019-11-25 | 3 | API working |
