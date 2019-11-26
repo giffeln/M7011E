@@ -29,3 +29,9 @@ CREATE TABLE `sim_db`.`Production` (
     REFERENCES `sim_db`.`Estates` (`idEstates`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+CREATE TABLE `sim_db`.`Wind` (
+  `idWind` INT NOT NULL AUTO_INCREMENT,
+  `value` FLOAT NOT NULL,
+  `time` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idWind`));
