@@ -14,6 +14,7 @@
       "express": "latest",
       "mariadb": "latest",
       "distributions-normal": "latest",
-      "chance": "latest"
+      "chance": "latest",
+      "body-parser": "latest"
     }
   }

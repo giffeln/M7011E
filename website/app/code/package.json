@@ -12,6 +12,7 @@
     },
     "dependencies": {
       "express": "latest",
-      "mariadb": "latest"
+      "mariadb": "latest",
+      "body-parser": "latest"
     }
   }
