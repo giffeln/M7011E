@@ -91,16 +91,42 @@ app.get('/consumption/', (req, res) => {
       sql = 'SELECT * from Consumption ORDER BY idConsumption DESC LIMIT 1000;'
     }
   }
-  /*query(sql).then((table) => {
-    res.send(table);
+  query(sql).then((table) => {
+    console.log(table.length);
+    if (table.length > 1 && table[0]["idConsumption"] > table[1]["idConsumption"]) {
+      res.send(table.reverse());
+    } else {
+      res.send(table);
+    }
   }).catch((err) => {
     console.log(err);
-  })*/
-  res.send(sql);
-})
+  });
+  //res.send(sql);
+});
 
-app.get('/user/', (req, res) => {
-  res.send({"wooptie": "woop"});
+app.get('/wind/', (req, res) => {
+  let sql;
+  let args = req.query;
+  if(args.hasOwnProperty("timeFrom")) {
+    if(args.hasOwnProperty("timeTo")) {
+      sql = 'SELECT * FROM Wind WHERE time BETWEEN ' + pool.escape(args["timeFrom"]) + ' AND ' + pool.escape(args["timeTo"]) + ';';
+    } else {
+      sql = 'SELECT * FROM Wind WHERE time >= ' + pool.escape(args["timeFrom"]) + ';';
+    }
+  } else {
+    sql = 'SELECT * from Wind ORDER BY idWind DESC LIMIT 1000;'
+  }
+  query(sql).then((table) => {
+    console.log(table.length);
+    if (table.length > 1 && table[0]["idWind"] > table[1]["idWind"]) {
+      res.send(table.reverse());
+    } else {
+      res.send(table);
+    }
+  }).catch((err) => {
+    console.log(err);
+  });
+  //res.send(sql);
 });
 
 function query(sql) {
