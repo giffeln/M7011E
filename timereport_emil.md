@@ -13,3 +13,5 @@
 | 2019-11-18 | 3 | Broke and fixed docker, research REST and POST parameters with nodeJS |
 | 2019-11-22 | 3 | API stuff |
 | 2019-11-25 | 3 | API working |
+| 2019-11-26 | 4 | Wind support and planning |
+| 2019-11-27 | 3 | Frontend research |
