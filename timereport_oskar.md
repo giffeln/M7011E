@@ -11,3 +11,6 @@
 | 2019-11-20 | 4 | Planning and working on how to design the homes (power usage etc) |
 | 2019-11-25 | 6 | Finishing up most of the sim |
 | 2019-11-26 | 4 | Setting up the sim's connection to DB |
+| 2019-12-02 | 4 | Security research |
+| 2019-12-03 | 4 | Frontend dev research |
+| 2019-12-03 | 6 | Some FE research and a lot of development |
