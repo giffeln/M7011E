@@ -79,8 +79,10 @@ function generateConsumption() {
         }
         sql = sql.slice(0, -2) + ";";
         writeToDB(sql);
+        process.exit();
     }).catch((err) => {
         console.log(err);
+        process.exit();
     })
 }
 

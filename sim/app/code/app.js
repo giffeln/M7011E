@@ -23,7 +23,7 @@ const app = express();
 
 app.get('/', (req, res) => {
   //url params
-  res.send("M7011E API");
+  res.send("M7011E API<br>/consumption/<br>/estates/<br>/production/<br>/wind/");
 });
 
 app.get('/production/', (req, res) => {
@@ -47,9 +47,9 @@ app.get('/production/', (req, res) => {
     }
   } else {
     if(args.hasOwnProperty("estate")) {
-      sql = 'SElECT * from Production WHERE estate = ' + pool.escape(args["estate"]) + ' ORDER BY "idProduction" DESC LIMIT 1000;';
+      sql = 'SElECT * from Production WHERE estate = ' + pool.escape(args["estate"]) + ' ORDER BY "idProduction" DESC LIMIT 500;';
     } else {
-      sql = 'SELECT * from Production ORDER BY idProduction DESC LIMIT 1000;'
+      sql = 'SELECT * from Production ORDER BY idProduction DESC LIMIT 500;'
     }
   }
   query(sql).then((table) => {
@@ -86,13 +86,13 @@ app.get('/consumption/', (req, res) => {
     }
   } else {
     if(args.hasOwnProperty("estate")) {
-      sql = 'SElECT * from Consumption WHERE estate = ' + pool.escape(args["estate"]) + ' ORDER BY "idConsumption" DESC LIMIT 1000;';
+      sql = 'SElECT * from Consumption WHERE estate = ' + pool.escape(args["estate"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
     } else {
-      sql = 'SELECT * from Consumption ORDER BY idConsumption DESC LIMIT 1000;'
+      sql = 'SELECT * from Consumption ORDER BY idConsumption DESC LIMIT 500;'
     }
   }
   query(sql).then((table) => {
-    console.log(table.length);
+    //console.log(table.length);
     if (table.length > 1 && table[0]["idConsumption"] > table[1]["idConsumption"]) {
       res.send(table.reverse());
     } else {
@@ -114,7 +114,7 @@ app.get('/wind/', (req, res) => {
       sql = 'SELECT * FROM Wind WHERE time >= ' + pool.escape(args["timeFrom"]) + ';';
     }
   } else {
-    sql = 'SELECT * from Wind ORDER BY idWind DESC LIMIT 1000;'
+    sql = 'SELECT * from Wind ORDER BY idWind DESC LIMIT 500;'
   }
   query(sql).then((table) => {
     //console.log(table.length);
