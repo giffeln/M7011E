@@ -1,0 +1,9 @@
+version: "3.3"
+
+services: 
+    sim_cron:
+        build: .
+        container_name: crontest
+        volumes:
+            - ./hello-cron:/etc/crontabs/root
+            - ./code:/home/node

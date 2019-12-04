@@ -13,6 +13,13 @@ services:
       - ./app/code:/home/node/app
     depends_on:
       - sim_db
+  sim_cron:
+    build: ./cron
+    container_name: M7011E_sim_cron
+    networks:
+      - sim_network
+    depends_on:
+      - sim_db
   sim_db:
     build: ./db
     container_name: M7011E_sim_db
