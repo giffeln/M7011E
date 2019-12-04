@@ -79,7 +79,10 @@ function generateConsumption() {
             sql = sql + "(" + consumption["value"] + ", " + consumption["estate"] + ', "'  + timestamp + '"), ';
         }
         sql = sql.slice(0, -2) + ";";
-        writeToDB(sql);
+        query(sql).then((table) => {}).catch((err) => { 
+            console.log(err); 
+            //process.exit();
+        })
         //process.exit();
     }).catch((err) => {
         console.log(err);
