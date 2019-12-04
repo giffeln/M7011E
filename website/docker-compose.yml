@@ -3,10 +3,10 @@ version: "3.3"
 services: 
   app:
     build: ./app
-    command: nodemon app.js
+    command: npm start
     container_name: M7011E_app
     ports: 
-      - "8080:8080"
+      - "8080:8080:4200"
     networks: 
       - db_network
     volumes:
