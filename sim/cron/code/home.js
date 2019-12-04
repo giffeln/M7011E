@@ -57,9 +57,10 @@ function generateHomes(amount) {
         sql = sql + "(" + home["size"] + ", " + home["people"] +"), ";
     }
     sql = sql.slice(0, -2) + ";";
-    //console.log(sql);
-    writeToDB(sql);
-    process.exit();
+    query(sql).then((table) => { generateConsumption(); }).catch((err) => { 
+        console.log(err); 
+        process.exit();
+    })
 }
 
 function generateConsumption() {
@@ -106,7 +107,6 @@ let sql = "SELECT * FROM Estates;";
 query(sql).then((table) => {
     if (table.length < 100) {
         generateHomes(100);
-        generateConsumption();
     } else {
         generateConsumption();
     }
