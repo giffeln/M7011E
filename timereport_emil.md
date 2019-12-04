@@ -15,3 +15,7 @@
 | 2019-11-25 | 3 | API working |
 | 2019-11-26 | 4 | Wind support and planning |
 | 2019-11-27 | 3 | Frontend research |
+| 2019-12-03 | 6 | Redoing some of the sim to work with API |
+| 2019-12-04 | 10 | All of sim works with API, cursing over js promises |
+| 2019-12-04 | 3 | Cursing over JS promises |
+| 2019-12-04 | 1 |  |
