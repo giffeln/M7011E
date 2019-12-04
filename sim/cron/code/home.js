@@ -59,7 +59,7 @@ function generateHomes(amount) {
     sql = sql.slice(0, -2) + ";";
     query(sql).then((table) => { generateConsumption(); }).catch((err) => { 
         console.log(err); 
-        process.exit();
+        //process.exit();
     })
 }
 
@@ -80,10 +80,10 @@ function generateConsumption() {
         }
         sql = sql.slice(0, -2) + ";";
         writeToDB(sql);
-        process.exit();
+        //process.exit();
     }).catch((err) => {
         console.log(err);
-        process.exit();
+        //process.exit();
     })
 }
 
