@@ -19,3 +19,7 @@
 | 2019-12-04 | 10 | All of sim works with API, cursing over js promises |
 | 2019-12-04 | 3 | Cursing over JS promises |
 | 2019-12-04 | 1 | Setting up demo on VPS |
+| 2019-12-09 | 3 | Planning and Angular research |
+| 2019-12-11 | 2 | Problem with updating npm and node |
+| 2019-12-11 | 3 | Letting backend through frontend |
+| 2019-12-11 | 5 | Authentication research and login backend |
