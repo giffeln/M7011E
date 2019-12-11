@@ -13,4 +13,7 @@
 | 2019-11-26 | 4 | Setting up the sim's connection to DB |
 | 2019-12-02 | 4 | Security research |
 | 2019-12-03 | 4 | Frontend dev research |
-| 2019-12-03 | 6 | Some FE research and a lot of development |
+| 2019-12-04 | 6 | Some FE research and a lot of development |
+| 2019-12-09 | 3 | Trying to read and use data from API |
+| 2019-12-10 | 3 | Trying to read and use data from API part 2 |
+| 2019-12-11 | 10| Trying to read and use data from API part 3... |
