@@ -1,0 +1,144 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', '-g', 'node@latest' ]
+2 info using npm@3.5.2
+3 info using node@v8.10.0
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readGlobalPackageData
+7 silly fetchPackageMetaData node@latest
+8 silly fetchNamedPackageData node
+9 silly mapToRegistry name node
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry uri https://registry.npmjs.org/node
+13 verbose request uri https://registry.npmjs.org/node
+14 verbose request no auth needed
+15 info attempt registry request try #1 at 1:13:13 PM
+16 verbose request id 1cafe5dc4db54f1e
+17 verbose etag W/"f431273e53fe7d1f1648fd57da95e226"
+18 verbose lastModified Wed, 04 Dec 2019 03:03:55 GMT
+19 http request GET https://registry.npmjs.org/node
+20 http 304 https://registry.npmjs.org/node
+21 verbose headers { date: 'Wed, 11 Dec 2019 12:13:14 GMT',
+21 verbose headers   connection: 'keep-alive',
+21 verbose headers   'set-cookie':
+21 verbose headers    [ '__cfduid=d67f0c8c8c7b5cc3d294483099a2072a81576066394; expires=Fri, 10-Jan-20 12:13:14 GMT; path=/; domain=.npmjs.org; HttpOnly' ],
+21 verbose headers   'cf-ray': '54375f12ea147664-ARN',
+21 verbose headers   age: '1175',
+21 verbose headers   'cache-control': 'public, max-age=300',
+21 verbose headers   etag: '"f431273e53fe7d1f1648fd57da95e226"',
+21 verbose headers   'last-modified': 'Wed, 04 Dec 2019 03:03:55 GMT',
+21 verbose headers   vary: 'Accept-Encoding',
+21 verbose headers   'cf-cache-status': 'HIT',
+21 verbose headers   'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+21 verbose headers   server: 'cloudflare' }
+22 silly get cb [ 304,
+22 silly get   { date: 'Wed, 11 Dec 2019 12:13:14 GMT',
+22 silly get     connection: 'keep-alive',
+22 silly get     'set-cookie':
+22 silly get      [ '__cfduid=d67f0c8c8c7b5cc3d294483099a2072a81576066394; expires=Fri, 10-Jan-20 12:13:14 GMT; path=/; domain=.npmjs.org; HttpOnly' ],
+22 silly get     'cf-ray': '54375f12ea147664-ARN',
+22 silly get     age: '1175',
+22 silly get     'cache-control': 'public, max-age=300',
+22 silly get     etag: '"f431273e53fe7d1f1648fd57da95e226"',
+22 silly get     'last-modified': 'Wed, 04 Dec 2019 03:03:55 GMT',
+22 silly get     vary: 'Accept-Encoding',
+22 silly get     'cf-cache-status': 'HIT',
+22 silly get     'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+22 silly get     server: 'cloudflare' } ]
+23 verbose etag https://registry.npmjs.org/node from cache
+24 verbose get saving node to /home/giffeln/.npm/registry.npmjs.org/node/.cache.json
+25 silly install normalizeTree
+26 silly loadCurrentTree Finishing
+27 silly loadIdealTree Starting
+28 silly install loadIdealTree
+29 silly cloneCurrentTree Starting
+30 silly install cloneCurrentTreeToIdealTree
+31 silly cloneCurrentTree Finishing
+32 silly loadShrinkwrap Starting
+33 silly install loadShrinkwrap
+34 silly loadShrinkwrap Finishing
+35 silly loadAllDepsIntoIdealTree Starting
+36 silly install loadAllDepsIntoIdealTree
+37 silly resolveWithNewModule node@13.3.0 checking installable status
+38 silly cache add args [ 'node@latest', null ]
+39 verbose cache add spec node@latest
+40 silly cache add parsed spec Result {
+40 silly cache add   raw: 'node@latest',
+40 silly cache add   scope: null,
+40 silly cache add   name: 'node',
+40 silly cache add   rawSpec: 'latest',
+40 silly cache add   spec: 'latest',
+40 silly cache add   type: 'tag' }
+41 silly addNamed node@latest
+42 verbose addNamed "latest" is being treated as a dist-tag for node
+43 info addNameTag [ 'node', 'latest' ]
+44 silly mapToRegistry name node
+45 silly mapToRegistry using default registry
+46 silly mapToRegistry registry https://registry.npmjs.org/
+47 silly mapToRegistry uri https://registry.npmjs.org/node
+48 verbose addNameTag registry:https://registry.npmjs.org/node not in flight; fetching
+49 verbose request uri https://registry.npmjs.org/node
+50 verbose request no auth needed
+51 info attempt registry request try #1 at 1:13:14 PM
+52 verbose etag W/"f431273e53fe7d1f1648fd57da95e226"
+53 verbose lastModified Wed, 04 Dec 2019 03:03:55 GMT
+54 http request GET https://registry.npmjs.org/node
+55 http 304 https://registry.npmjs.org/node
+56 verbose headers { date: 'Wed, 11 Dec 2019 12:13:14 GMT',
+56 verbose headers   connection: 'keep-alive',
+56 verbose headers   'set-cookie':
+56 verbose headers    [ '__cfduid=d67f0c8c8c7b5cc3d294483099a2072a81576066394; expires=Fri, 10-Jan-20 12:13:14 GMT; path=/; domain=.npmjs.org; HttpOnly' ],
+56 verbose headers   'cf-ray': '54375f149b5c7664-ARN',
+56 verbose headers   age: '1175',
+56 verbose headers   'cache-control': 'public, max-age=300',
+56 verbose headers   etag: '"f431273e53fe7d1f1648fd57da95e226"',
+56 verbose headers   'last-modified': 'Wed, 04 Dec 2019 03:03:55 GMT',
+56 verbose headers   vary: 'Accept-Encoding',
+56 verbose headers   'cf-cache-status': 'HIT',
+56 verbose headers   'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+56 verbose headers   server: 'cloudflare' }
+57 silly get cb [ 304,
+57 silly get   { date: 'Wed, 11 Dec 2019 12:13:14 GMT',
+57 silly get     connection: 'keep-alive',
+57 silly get     'set-cookie':
+57 silly get      [ '__cfduid=d67f0c8c8c7b5cc3d294483099a2072a81576066394; expires=Fri, 10-Jan-20 12:13:14 GMT; path=/; domain=.npmjs.org; HttpOnly' ],
+57 silly get     'cf-ray': '54375f149b5c7664-ARN',
+57 silly get     age: '1175',
+57 silly get     'cache-control': 'public, max-age=300',
+57 silly get     etag: '"f431273e53fe7d1f1648fd57da95e226"',
+57 silly get     'last-modified': 'Wed, 04 Dec 2019 03:03:55 GMT',
+57 silly get     vary: 'Accept-Encoding',
+57 silly get     'cf-cache-status': 'HIT',
+57 silly get     'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+57 silly get     server: 'cloudflare' } ]
+58 verbose etag https://registry.npmjs.org/node from cache
+59 verbose get saving node to /home/giffeln/.npm/registry.npmjs.org/node/.cache.json
+60 silly addNameTag next cb for node with tag latest
+61 silly addNamed node@13.3.0
+62 verbose addNamed "13.3.0" is a plain semver version for node
+63 silly cache afterAdd node@13.3.0
+64 verbose afterAdd /home/giffeln/.npm/node/13.3.0/package/package.json not in flight; writing
+65 silly rollbackFailedOptional Starting
+66 silly rollbackFailedOptional Finishing
+67 silly runTopLevelLifecycles Starting
+68 silly runTopLevelLifecycles Finishing
+69 silly install printInstalled
+70 verbose stack Error: EACCES: permission denied, open '/home/giffeln/.npm/node/13.3.0/package/package.json.1886319238'
+71 verbose cwd /home/giffeln/git/M7011E/website/app/code
+72 error Linux 5.0.0-37-generic
+73 error argv "/usr/bin/node" "/usr/bin/npm" "install" "-g" "node@latest"
+74 error node v8.10.0
+75 error npm  v3.5.2
+76 error path /home/giffeln/.npm/node/13.3.0/package/package.json.1886319238
+77 error code EACCES
+78 error errno -13
+79 error syscall open
+80 error Error: EACCES: permission denied, open '/home/giffeln/.npm/node/13.3.0/package/package.json.1886319238'
+80 error  { Error: EACCES: permission denied, open '/home/giffeln/.npm/node/13.3.0/package/package.json.1886319238'
+80 error   errno: -13,
+80 error   code: 'EACCES',
+80 error   syscall: 'open',
+80 error   path: '/home/giffeln/.npm/node/13.3.0/package/package.json.1886319238' }
+81 error Please try running this command again as root/Administrator.
+82 verbose exit [ -13, true ]

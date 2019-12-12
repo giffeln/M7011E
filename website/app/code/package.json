@@ -2,9 +2,12 @@
     "name": "login_page",
     "version": "1.0.0",
     "scripts": {
-        "start": "webpack-dev-server --mode development --open"
+        "start": "webpack-dev-server --mode development",
+        "serve2": "concurrently \"npm start\" \"server/node_modules/.bin/ts-node-dev server/server.ts\"",
+        "serve": "\"server/node_modules/.bin/ts-node-dev server/server.ts\""
     },
     "dependencies": {
+        "@angular/cli": "^8.3.20",
         "@angular/common": "^7.2.15",
         "@angular/compiler": "^7.2.15",
         "@angular/core": "^7.2.15",
@@ -12,12 +15,15 @@
         "@angular/platform-browser": "^7.2.15",
         "@angular/platform-browser-dynamic": "^7.2.15",
         "@angular/router": "^7.2.15",
+        "concurrently": "^5.0.1",
+        "cookie-parser": "^1.4.4",
         "core-js": "^3.4.7",
+        "node": "^13.3.0",
         "rxjs": "^6.5.3",
         "zone.js": "^0.10.2"
     },
     "devDependencies": {
-        "@types/node": "^11.15.3",
+        "@types/node": "^12.12.17",
         "angular2-template-loader": "^0.6.2",
         "html-webpack-plugin": "^3.2.0",
         "raw-loader": "^1.0.0",

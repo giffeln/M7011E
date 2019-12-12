@@ -3,10 +3,11 @@ version: "3.3"
 services: 
   app:
     build: ./app
-    command: npm start
+    command: npm run serve
     container_name: M7011E_app
     ports: 
-      - "8080:8080:4200"
+      - "8080:8080"
+      - "8082:8082"
     networks: 
       - db_network
     volumes:
