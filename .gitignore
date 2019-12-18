@@ -1,4 +1,7 @@
 website/db/mariadb-data/
 website/app/code/node_modules/
+*/node_modules/
 sim/app/code/node_modules/
 sim/db/mariadb-data/
+sim/cron/code/node_modules/
+*/mariadb-data/
