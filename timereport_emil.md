@@ -23,3 +23,4 @@
 | 2019-12-11 | 2 | Problem with updating npm and node |
 | 2019-12-11 | 3 | Letting backend through frontend |
 | 2019-12-11 | 5 | Authentication research and login backend |
+| 2019-12-18 | 3 | JWT research and testing |
