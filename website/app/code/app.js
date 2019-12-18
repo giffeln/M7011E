@@ -1,5 +1,5 @@
 //import * as express from 'express';
-const routes = require('./routes');
+const routes = require('./private/routes');
 const express = require("express");
 const cookieParser = require('cookie-parser');
 

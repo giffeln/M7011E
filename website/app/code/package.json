@@ -5,16 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "ts-node-dev server.ts"
+    "serve": "node app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/express": "latest",
-    "express": "latest",
-    "ts-node": "latest",
-    "ts-node-dev": "latest",
-    "tslint": "latest",
-    "typescript": "latest"
+    "@types/express": "^4.17.2",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1"
   }
 }
