@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
   //url params
-  res.send("M7011E API Placeholder");
+  res.send("M7011E API<br>/consumption/<br>/estates/<br>/production/<br>/wind/");
 });
 
 app.get('/production/', (req, res) => {
@@ -53,9 +53,9 @@ app.get('/production/', (req, res) => {
     }
   } else {
     if(args.hasOwnProperty("estate")) {
-      sql = 'SElECT * from Production WHERE estate = ' + pool.escape(args["estate"]) + ' ORDER BY "idProduction" DESC LIMIT 1000;';
+      sql = 'SElECT * from Production WHERE estate = ' + pool.escape(args["estate"]) + ' ORDER BY "idProduction" DESC LIMIT 500;';
     } else {
-      sql = 'SELECT * from Production ORDER BY idProduction DESC LIMIT 1000;'
+      sql = 'SELECT * from Production ORDER BY idProduction DESC LIMIT 500;'
     }
   }
   query(sql).then((table) => {
@@ -66,7 +66,7 @@ app.get('/production/', (req, res) => {
       res.send(table);
     }
   }).catch((err) => {
-    console.log(err);
+    console.log("ERROR /production: " + err);
   })
   //res.send(sql);
 });
@@ -92,20 +92,20 @@ app.get('/consumption/', (req, res) => {
     }
   } else {
     if(args.hasOwnProperty("estate")) {
-      sql = 'SElECT * from Consumption WHERE estate = ' + pool.escape(args["estate"]) + ' ORDER BY "idConsumption" DESC LIMIT 1000;';
+      sql = 'SElECT * from Consumption WHERE estate = ' + pool.escape(args["estate"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
     } else {
-      sql = 'SELECT * from Consumption ORDER BY idConsumption DESC LIMIT 1000;'
+      sql = 'SELECT * from Consumption ORDER BY idConsumption DESC LIMIT 500;'
     }
   }
   query(sql).then((table) => {
-    console.log(table.length);
+    //console.log(table.length);
     if (table.length > 1 && table[0]["idConsumption"] > table[1]["idConsumption"]) {
       res.send(table.reverse());
     } else {
       res.send(table);
     }
   }).catch((err) => {
-    console.log(err);
+    console.log("ERROR /consumption: " + err);
   });
   //res.send(sql);
 });
@@ -120,32 +120,50 @@ app.get('/wind/', (req, res) => {
       sql = 'SELECT * FROM Wind WHERE time >= ' + pool.escape(args["timeFrom"]) + ';';
     }
   } else {
-    sql = 'SELECT * from Wind ORDER BY idWind DESC LIMIT 1000;'
+    sql = 'SELECT * from Wind ORDER BY idWind DESC LIMIT 500;'
   }
   query(sql).then((table) => {
-    console.log(table.length);
+    //console.log(table.length);
     if (table.length > 1 && table[0]["idWind"] > table[1]["idWind"]) {
       res.send(table.reverse());
     } else {
       res.send(table);
     }
   }).catch((err) => {
-    console.log(err);
+    console.log("ERROR /wind: " + err);
   });
   //res.send(sql);
 });
+
+app.get('/estates/', (req, res) => {
+  let sql;
+  let args = req.query;
+  if(args.hasOwnProperty("estate")) {
+    sql = 'SELECT * FROM Estates WHERE idEstate = ' + args["estate"] + ';';
+  } else {
+    sql = 'SELECT * FROM Estates;'
+  }
+  query(sql).then((table) => {
+    res.send(table);
+  }).catch((err) => {
+    console.log("ERROR /estates: " + err)
+  })
+})
 
 function query(sql) {
   return new Promise(async (resolve, reject) => {
     let conn;
     try {
-      conn = await pool.getConnection();
-      var rows = await conn.query(sql);
+      //conn = await pool.getConnection();
+      //var rows = await conn.query(sql);
+      let rows = await pool.query(sql);
       resolve(rows);
+      //conn.release;
     } catch (err) {
-      reject(err)
+      reject(err);
+      //conn.release;
     } finally {
-      if (conn) conn.end;
+      //if (conn) conn.release;
     }
   })
 }

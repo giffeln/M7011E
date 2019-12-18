@@ -1,0 +1,20 @@
+{
+    "name": "m7011e_sim_app",
+    "version": "0.1.0",
+    "description": "Node.js on Docker",
+    "author": "First Last <first.last@example.com>",
+    "main": "app.js",
+    "scripts": {
+      "start": "nodemon app.js"
+    },
+    "devDependencies": {
+      "nodemon": "~1.19.4"
+    },
+    "dependencies": {
+      "express": "latest",
+      "mariadb": "latest",
+      "distributions-normal": "latest",
+      "chance": "latest",
+      "body-parser": "latest"
+    }
+  }

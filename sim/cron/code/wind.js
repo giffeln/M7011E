@@ -1,4 +1,4 @@
-var createDist = require( 'distributions-normal' ),
+const createDist = require( 'distributions-normal' ),
     Chance = require('chance');
 
 const mariadb = require("mariadb");
@@ -17,10 +17,9 @@ var mu = 3.12,
     xHigh = 18;
 
 // Create random number generator
-var Chance = new Chance(),
-    myDate = new Date(),
-    intervalTime = 10000; //in milliseconds
+var chance = new Chance();
 
+//console.log(myDate.toLocaleString());
 
 // Create a vector...
 var vec = new Array( 100 ),
@@ -52,20 +51,20 @@ for(value in pdf){
 }
 
 function newSpeed(){
-    return vec[pdf.indexOf(statArr[Chance.integer({min: 0, max: statArr.length})])];
+    return vec[pdf.indexOf(statArr[chance.integer({min: 0, max: statArr.length})])];
 }
 
 var speed = newSpeed();
 
 
-setInterval(function(){ 
+/*setInterval(function(){ 
     speed = newSpeed();
-    }, 86400000);
+    }, 86400000);*/
     
-console.log(speed);
+//console.log(speed);
 
 function updateDailyWS(){
-    var speedFluctuation = speed + Chance.floating({min: -1, max: 1})
+    var speedFluctuation = speed + chance.floating({min: -1, max: 1})
     if(speedFluctuation < 0){
         return 0;
     }
@@ -75,22 +74,31 @@ function updateDailyWS(){
 
 }
 
-function getDateString(myDate){
-    var dateString = myDate.getFullYear()+"-"+myDate.getMonth()+"-"+myDate.getDate()+" "+myDate.getHours()+":"+myDate.getMinutes()+":"+myDate.getSeconds();
-    return dateString;
-} 
-
-function getDate(){
-    return myDate;
-}
-
-function updateDateTime(){
-    myDate.setUTCMilliseconds(intervalTime);
-    return myDate;
-}
-
-function getPool(){
-    return pool;
+function getDateString(now) {
+    let now     = new Date();
+    let year    = now.getFullYear();
+    let month   = now.getMonth()+1; 
+    let day     = now.getDate();
+    let hour    = now.getHours();
+    let minute  = now.getMinutes();
+    let second  = now.getSeconds(); 
+    if(month.toString().length == 1) {
+         month = '0'+month;
+    }
+    if(day.toString().length == 1) {
+         day = '0'+day;
+    }   
+    if(hour.toString().length == 1) {
+         hour = '0'+hour;
+    }
+    if(minute.toString().length == 1) {
+         minute = '0'+minute;
+    }
+    if(second.toString().length == 1) {
+         second = '0'+second;
+    }   
+    let dateTime = year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;   
+    return dateTime;
 }
 
 function query(sql) { //sql = query
@@ -109,17 +117,17 @@ function query(sql) { //sql = query
     })
   }
 
-setInterval(function(){
-    let myDate = updateDateTime(getDate());
-    var dateString = getDateString(myDate);
-    var windSpeedFluc = updateDailyWS();
+function main() {
+    let windSpeedFluc = updateDailyWS();
     console.log(windSpeedFluc);
-    console.log(dateString)
-    sql = 'INSERT INTO Wind (time, value) VALUES ("' + dateString + '", ' + windSpeedFluc + ');';
-    console.log(sql);
-    query(sql).then((table) => {
-        res.send(table);
-      }).catch((err) => {
-        console.log(err);
-      });
-    }, intervalTime);
+    //process.exit()
+    return windSpeedFluc;
+}
+
+module.exports = {
+    getWind: function(){
+        return main();
+    }
+}
+
+//main();
