@@ -1,36 +1,20 @@
 {
-    "name": "login_page",
-    "version": "1.0.0",
-    "scripts": {
-        "start": "webpack-dev-server --mode development",
-        "serve2": "concurrently \"npm start\" \"server/node_modules/.bin/ts-node-dev server/server.ts\"",
-        "serve": "\"server/node_modules/.bin/ts-node-dev server/server.ts\""
-    },
-    "dependencies": {
-        "@angular/cli": "^8.3.20",
-        "@angular/common": "^7.2.15",
-        "@angular/compiler": "^7.2.15",
-        "@angular/core": "^7.2.15",
-        "@angular/forms": "^7.2.15",
-        "@angular/platform-browser": "^7.2.15",
-        "@angular/platform-browser-dynamic": "^7.2.15",
-        "@angular/router": "^7.2.15",
-        "concurrently": "^5.0.1",
-        "cookie-parser": "^1.4.4",
-        "core-js": "^3.4.7",
-        "node": "^13.3.0",
-        "rxjs": "^6.5.3",
-        "zone.js": "^0.10.2"
-    },
-    "devDependencies": {
-        "@types/node": "^12.12.17",
-        "angular2-template-loader": "^0.6.2",
-        "html-webpack-plugin": "^3.2.0",
-        "raw-loader": "^1.0.0",
-        "ts-loader": "^5.4.5",
-        "typescript": "^3.7.3",
-        "webpack": "^4.41.2",
-        "webpack-cli": "^3.3.10",
-        "webpack-dev-server": "^3.9.0"
-    }
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "ts-node-dev server.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "latest",
+    "express": "latest",
+    "ts-node": "latest",
+    "ts-node-dev": "latest",
+    "tslint": "latest",
+    "typescript": "latest"
+  }
 }
