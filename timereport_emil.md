@@ -25,3 +25,5 @@
 | 2019-12-11 | 5 | Authentication research and login backend |
 | 2019-12-18 | 3 | JWT research and testing |
 | 2019-12-18 | 4 | Register and password hash, more promises... |
+| 2019-12-19 | 5 | Tokens and login |
+| 2019-12-19 | 2 | Get/Set Powerplant |
