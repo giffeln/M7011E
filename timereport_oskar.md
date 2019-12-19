@@ -17,3 +17,4 @@
 | 2019-12-09 | 3 | Trying to read and use data from API |
 | 2019-12-10 | 3 | Trying to read and use data from API part 2 |
 | 2019-12-11 | 10| Trying to read and use data from API part 3... |
+| 2019-12-19 | 8| New website up, working login, register and data from api is available |
