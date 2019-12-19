@@ -24,3 +24,4 @@
 | 2019-12-11 | 3 | Letting backend through frontend |
 | 2019-12-11 | 5 | Authentication research and login backend |
 | 2019-12-18 | 3 | JWT research and testing |
+| 2019-12-18 | 4 | Register and password hash, more promises... |
