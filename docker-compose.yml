@@ -29,10 +29,17 @@ services:
     command: node app.js
     container_name: M7011E_sim_app
     ports: 
-      - "8081:8080"
+      - "8081:8081"
     networks: 
       - sim_network
     depends_on:
+      - sim_db
+  sim_cron:
+    build: ./sim/cron
+    container_name: M7011E_sim_cron
+    networks:
+      - sim_network
+    depends_on: 
       - sim_db
   sim_db:
     build: ./sim/db
