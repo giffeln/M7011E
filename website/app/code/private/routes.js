@@ -3,15 +3,7 @@ const login = require('./login');
 
 const app = express.Router();
 
-module.exports = {routes: app};
-
-app.get("/api/", (req, res) => {
-    res.send("hello api");
-});
-
-app.post("/api/login/", async (req, res) => {
-    //let username = "admin";
-    //let password = "admin123";
+app.post("/login/", async (req, res) => {
     let username = req.body.anv;
     let password = req.body.pass;
     console.log("logging in: " + username);
@@ -26,37 +18,23 @@ app.post("/api/login/", async (req, res) => {
     })
 });
 
-/*app.get("/api/login2/", (req, res) => {
-    let username = "test";
-    let password = "hejsan123";
-    let token = login.login(username, password);
-    if(token) {
-        res.cookie("auth", token, {maxAge: 1000 * 60 * 60 * 24});
-        res.send("logged in");
-    } else { res.send("Error"); }
-});*/
-
-app.get("/api/logout", (req, res) => {
+app.get("/logout", (req, res) => {
     login.logout();
     res.clearCookie("auth");
-    res.send("logged out");
+    res.send({"logged out": true});
 })
 
-app.get("/api/auth/", (req, res) => {
-    if(login.checkToken(req.cookies["auth"])) {
-        res.send("authenticated!");
-    } else {
-        res.send("not authenticated");
-    }
+app.get("/auth", login.verify, (req, res) => {
+    res.send({"authenticated": true});
 })
 
-app.get("/api/admin/", (req, res) => {
-    if(login.checkAdmin(req.cookies["auth"])) {
-        res.send("is admin");
-    } else { res.send("not admin"); }
+app.get("/admin", login.verify, (req, res) => {
+    if(req.user.admin == 1) {
+        res.send({"admin": true});
+    } else { res.send({"admin": false}); }
 })
 
-app.post("/api/register/", async (req, res) => {
+app.post("/register", async (req, res) => {
     let user = req.body.anv;
     let pass = req.body.pass;
     let estate = false;
@@ -82,3 +60,5 @@ app.post("/api/register/", async (req, res) => {
         res.send();
     })
 })
+
+module.exports = app;

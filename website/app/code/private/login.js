@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const mariadb = require('mariadb');
+const jwt = require('jsonwebtoken');
 const pool = mariadb.createPool({
   host: "web_db",
   user: "node",
@@ -8,10 +9,7 @@ const pool = mariadb.createPool({
   connectionLimit: 5
 });
 
-let users = [
-    {username: "admin", password: "admin123", admin: 1, token: "woot"},
-    {username: "test", password: "hejsan123", admin: 0, token: "wooted"}
-];
+const secret = "aspkgfjASÖPOLjhkwepq23oijrn2punf";
 
 module.exports = {
     login: async function(username, password) {
@@ -20,7 +18,8 @@ module.exports = {
             query(sql).then(async (table) => {
                 let pass = await bcrypt.compare(password, table[0]["password"])
                 if (table.length == 1 && pass) {
-                    resolve(true);
+                    let token = jwt.sign({"username": username, "admin": table[0]["admin"]}, secret, {expiresIn: "1 days"});
+                    resolve(token);
                 } else {
                     resolve(false);
                 }
@@ -38,21 +37,6 @@ module.exports = {
             }
         }
         return false;
-    },
-    checkAdmin: function(token) {
-        for(let i = 0; i < users.length; i++) {
-            let user = users[i];
-            if(user["token"] == token) {
-                if(user["admin"] == 1) {
-                    return true;
-                }
-                return false;
-            }
-        }
-        return false;
-    },
-    logout: function() {
-        //TODO destroy token
     },
     register: async function(username, password, admin, estate) {
         return new Promise(async (resolve, reject) => {
@@ -84,6 +68,20 @@ module.exports = {
                 reject(false);
             });
         })
+    },
+    verify: function(req, res, next) {
+        const token = req.cookies["auth"];
+        if(!token) {
+            return res.status(401).send({auth: false});
+        }
+        try {
+            const verified = jwt.verify(token, secret);
+            req.user = verified;
+            next();
+        } catch(err) {
+            console.log("Invalid token")
+            res.status(400).send();
+        }
     }
 }
 
