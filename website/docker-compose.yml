@@ -1,27 +1,26 @@
 version: "3.3"
 
 services: 
-  app:
+  web_app:
     build: ./app
-    command: npm run serve
-    container_name: M7011E_app
+    command: nodemon app.js
+    container_name: M7011E_web_app
     ports: 
       - "8080:8080"
-      - "8082:8082"
     networks: 
-      - db_network
+      - web_network
     volumes:
       - ./app/code:/home/node/app
     depends_on:
-      - db
-  db:
+      - web_db
+  web_db:
     build: ./db
-    container_name: M7011E_db
+    container_name: M7011E_web_db
     ports:
       - "3306:3306"
     networks: 
-      - db_network
-    hostname: db
+      - web_network
+    hostname: web_db
     environment:
       MYSQL_ROOT_PASSWORD: node
       MYSQL_DATABASE: web_db
@@ -30,5 +29,5 @@ services:
     volumes:
       - ./db/mariadb-data:/var/lib/mysql
 networks: 
-  db_network:
+  web_network:
     driver: bridge
