@@ -80,15 +80,85 @@ function query(sql) { //sql = query
     })
 }
 
+function getPlantPower() {
+    return new Promise(async (resolve, reject) => {
+        let sql = "SELECT value FROM Powerplant ORDER BY idPowerplant DESC LIMIT 1";
+        query(sql).then((table) => {
+            resolve(table[0]["value"]);
+        }).catch((err) => {
+            reject(false);
+        })
+    });
+}
+
+function getEstates() {
+    return new Promise(async (resolve, reject) => {
+        let sql = "SELECT * FROM Estates WHERE batterySize > 0;";
+        query(sql).then((table) => {
+            resolve(table);
+        }).catch((err) => {
+            reject(false);
+        })
+    })
+}
+
+function insertWind(timestamp) {
+    return new Promise(async (resolve, reject) => {
+        let sql = "INSERT INTO Wind (value, time) VALUES (" + windspeed + ', "' + timestamp + '")';
+        query(sql).then((table) => {
+            resolve(true);
+        }).catch((err) => {
+            reject(false);
+        })
+    })
+}
+
 function main() {
     let power = calcPow();
     let timestamp = getTimestamp();
+    let plantPromise = getPlantPower();
+    let windPromise = insertWind(timestamp);
+    let estatePromise = getEstates();
+    Promise.all([plantPromise, windPromise, estatePromise]).then(function(values) {
+        let plant = values[0];
+        let wind = values[1];
+        let estates = values[2];
+        if(wind && plant !== false && estates !== false) {
+            if(estates.length >= 1) {
+                sql = "INSERT INTO Production (value, estate, time) VALUES (" + plant + ", NULL, " + '"' + timestamp + '"), ';
+                for(let i = 0; i < estates.length; i++) {
+                    let home = estates[i];
+                    sql = sql + "(" + power + ", " + home["idEstates"] + ', "' + timestamp + '"), ';
+                }
+                sql = sql.slice(0, -2);
+            } else {
+                sql = "INSERT INTO Production (value, estate, time) VALUES (" + plant + ", NULL, " + '"' + timestamp + '")';
+            }
+            query(sql).then((table) => {
+                console.log("Inserted")
+                process.exit();
+            }).catch((err) => {
+                console.log("Production Error 1: " + err);
+                process.exit();
+            });
+        } else {
+            console.log("Production Error 2");
+            process.exit();
+        }
+    });
+}
+
+/*
+async function main() {
+    let power = calcPow();
+    let timestamp = getTimestamp();
+    insertPlantPower(timestamp).then().catch((err) => {console.log(err)});
     let sql = "INSERT INTO Wind (value, time) VALUES (" + windspeed + ', "' + timestamp + '");';
     query(sql).then((table) => {
         sql = "SELECT * FROM Estates WHERE batterySize > 0;";
         query(sql).then((table) => {
             if(table.length >= 1) {
-                sql = "INSERT INTO Production (value, estate, time) VALUES ";
+                sql = "INSERT INTO Production (value, estate, time) VALUES (" + ")";
                 for(let i = 0; i < table.length; i++) {
                     let home = table[i];
                     sql = sql + "(" + power + ", " + home["idEstates"] + ', "' + timestamp + '"), ';
@@ -110,6 +180,6 @@ function main() {
         process.exit();
         return false;
     })
-}
+}*/
 
 main();

@@ -1,20 +1,22 @@
 {
-    "name": "m7011e_sim_app",
-    "version": "0.1.0",
-    "description": "Node.js on Docker",
-    "author": "First Last <first.last@example.com>",
-    "main": "app.js",
-    "scripts": {
-      "start": "nodemon app.js"
-    },
-    "devDependencies": {
-      "nodemon": "~1.19.4"
-    },
-    "dependencies": {
-      "express": "latest",
-      "mariadb": "latest",
-      "distributions-normal": "latest",
-      "chance": "latest",
-      "body-parser": "latest"
-    }
+  "name": "m7011e_sim_app",
+  "version": "0.1.0",
+  "description": "Node.js on Docker",
+  "author": "First Last <first.last@example.com>",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "devDependencies": {
+    "nodemon": "~1.19.4"
+  },
+  "dependencies": {
+    "body-parser": "latest",
+    "chance": "latest",
+    "cookie-parser": "^1.4.4",
+    "distributions-normal": "latest",
+    "express": "latest",
+    "jsonwebtoken": "^8.5.1",
+    "mariadb": "latest"
   }
+}

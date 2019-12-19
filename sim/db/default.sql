@@ -7,6 +7,11 @@ CREATE TABLE IF NOT EXISTS `sim_db`.`Estates` (
   `batteryCharging` FLOAT DEFAULT 0,
   PRIMARY KEY (`idEstates`));
 
+CREATE TABLE IF NOT EXISTS `sim_db`.`Powerplant` (
+  `idPowerplant` INT NOT NULL AUTO_INCREMENT,
+  `value` INT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`idPowerplant`));
+
 CREATE TABLE IF NOT EXISTS `sim_db`.`Consumption` (
   `idConsumption` INT NOT NULL AUTO_INCREMENT,
   `estate` INT NULL,
@@ -38,3 +43,6 @@ CREATE TABLE IF NOT EXISTS `sim_db`.`Wind` (
   `value` FLOAT NOT NULL,
   `time` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idWind`));
+
+INSERT INTO sim_db.Powerplant (value) 
+  VALUES (10);
