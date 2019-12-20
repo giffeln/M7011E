@@ -27,3 +27,4 @@
 | 2019-12-18 | 4 | Register and password hash, more promises... |
 | 2019-12-19 | 5 | Tokens and login |
 | 2019-12-19 | 2 | Get/Set Powerplant |
+| 2019-12-20 | 5 | Backend functions for frontend |
