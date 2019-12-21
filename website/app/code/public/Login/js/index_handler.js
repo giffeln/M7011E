@@ -1,3 +1,14 @@
+$('.collapse-item').click(function(){
+    var page = $(this).attr('href');
+    $('.collapse-item').removeClass("active");
+    $(this).addClass("active")
+    $("#Main").load(page, function(){
+        getData();
+    })
+    return false;
+})
+
+
 function getData() {
     var dataToGet = document.getElementById("headerName").innerText.toLowerCase();
     let url = "https://api.projekt.giffeln.se/" + dataToGet;
@@ -42,5 +53,3 @@ function writeDataToTable(resp){
     setTableHeader(resp, table);
     setTableBody(resp, table);
 }
-
-getData();
