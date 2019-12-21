@@ -113,6 +113,13 @@ function insertWind(timestamp) {
     })
 }
 
+function exit() {
+    console.log("Exiting prod.js");
+    pool.end().finally(() => {
+        process.exit();
+    });
+}
+
 function main() {
     let power = calcPow();
     let timestamp = getTimestamp();
@@ -135,15 +142,15 @@ function main() {
                 sql = "INSERT INTO Production (value, estate, time) VALUES (" + plant + ", NULL, " + '"' + timestamp + '")';
             }
             query(sql).then((table) => {
-                console.log("Inserted")
-                process.exit();
+                console.log("Inserted");
             }).catch((err) => {
                 console.log("Production Error 1: " + err);
-                process.exit();
+            }).finally(() => {
+                exit();
             });
         } else {
             console.log("Production Error 2");
-            process.exit();
+            exit();
         }
     });
 }

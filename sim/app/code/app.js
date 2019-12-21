@@ -155,12 +155,12 @@ app.get('/estates', (req, res) => {
 });
 
 app.get('/estate', verifyUser, (req, res) => {
-    let sql = "SELECT * FROM Estates WHERE idEstates = " + req.user.estate;
+    let sql = "SELECT * FROM Estates WHERE idEstates = " + req.query.estate;
     query(sql).then((table) => {
         res.json(table[0]);
     }).catch((err) => {
         console.log(err);
-        res.json(false);
+        res.json(err);
     });
 });
 

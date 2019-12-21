@@ -1,14 +1,14 @@
 const createDist = require( 'distributions-normal' ),
     Chance = require('chance');
 
-const mariadb = require("mariadb");
+/*const mariadb = require("mariadb");
 const pool = mariadb.createPool({
     host: "localhost",
     user: "node",
     password: "node",
     database: "sim_db",
     connectionLimit: 5
-});
+});*/
  
 // Define the distribution parameters...
 var mu = 3.12,
@@ -74,7 +74,7 @@ function updateDailyWS(){
 
 }
 
-function getDateString(now) {
+/*function getDateString() {
     let now     = new Date();
     let year    = now.getFullYear();
     let month   = now.getMonth()+1; 
@@ -99,9 +99,9 @@ function getDateString(now) {
     }   
     let dateTime = year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;   
     return dateTime;
-}
+}*/
 
-function query(sql) { //sql = query
+/*function query(sql) { //sql = query
     return new Promise(async (resolve, reject) => {
       let conn;
       try {
@@ -115,11 +115,11 @@ function query(sql) { //sql = query
         if (conn) conn.end;
       }
     })
-  }
+  }*/
 
 function main() {
     let windSpeedFluc = updateDailyWS();
-    console.log(windSpeedFluc);
+    //console.log(windSpeedFluc);
     //process.exit()
     return windSpeedFluc;
 }

@@ -1,15 +1,17 @@
 const express = require("express");
 const login = require('./login');
+const other = require('./other');
 
 const app = express.Router();
 
 app.post("/login/", async (req, res) => {
     let username = req.body.anv;
     let password = req.body.pass;
-    console.log("logging in: " + username);
     login.login(username, password).then((token) => {
         if(token) {
-            res.cookie("auth", token, {maxAge: 1000 * 60 * 60 * 24});
+            console.log(username + " logged in");
+            res.cookie("auth", token, {maxAge: 1000 * 60 * 60 * 24, domain: ".projekt.giffeln.se"});
+            //res.cookie("auth", token, {maxAge: 1000 * 60 * 60 * 24});
             res.json({login:true});
         } else { res.json({login:false}); }
     }).catch((err) => {
@@ -19,20 +21,20 @@ app.post("/login/", async (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-    login.logout();
+    //login.logout();
     res.clearCookie("auth");
     res.send({"logged out": true});
-})
+});
 
 app.get("/auth", login.verify, (req, res) => {
     res.send({"authenticated": true});
-})
+});
 
 app.get("/admin", login.verify, (req, res) => {
     if(req.user.admin == 1) {
         res.send({"admin": true});
     } else { res.send({"admin": false}); }
-})
+});
 
 app.post("/register", async (req, res) => {
     let user = req.body.anv;
@@ -59,6 +61,17 @@ app.post("/register", async (req, res) => {
         res.json({register: false});
         res.send();
     })
-})
+});
+
+app.post("/set/estate", login.verifyAdmin, (req, res) => {
+    let estate =  req.body.estate;
+    let user = req.body.user;
+    let cookie = "auth=" + req.cookies["auth"];
+    other.setEstate(user, estate, cookie).then(() => {
+        res.json(true);
+    }).catch((err) => {
+        res.json(false);
+    });
+});
 
 module.exports = app;
