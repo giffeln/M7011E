@@ -56,9 +56,11 @@
             <a class="collapse-item" href="login.html">Login</a>
             <a class="collapse-item" href="register.html">Register</a>
             <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item active" href="utils/404.html">404 Page</a>
-            <a class="collapse-item" href="utils/blank.html">Blank Page</a>
+            <h6 class="collapse-header">Data Tables:</h6>
+            <a id="table1" class="collapse-item" href="tables/consumption.html">Consumption</a>
+            <a id="table2" class="collapse-item" href="tables/production.html">Production</a>
+            <a id="table3" class="collapse-item" href="tables/wind.html">Wind</a>
+            <a id="table4" class="collapse-item" href="tables/estates.html">Estates</a>
           </div>
         </div>
       </li>
@@ -174,30 +176,10 @@
           </ul>
 
         </nav>
-        <div class="container-fluid">
+        <div class="container-fluid" id="Main">
 
           <!-- 404 Error Text -->
-          <div class="text-center">
-            <div class="container-fluid">
-
-              <!-- Page Heading -->
-              <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-              <p class="mb-4"></p>
-    
-              <!-- DataTales Example -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Data</h6>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          
 
         </div>
         <!-- /.container-fluid -->
@@ -252,9 +234,9 @@
   
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    <script src="js/index_handler.js"></script>
   
   
-    <script src="js/apiHandler.js"></script>
   </body>
   
   </html>

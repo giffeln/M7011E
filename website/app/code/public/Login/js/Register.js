@@ -1,8 +1,8 @@
-let url = "/api/register";
+var url = "/api/register";
 
 
-async function fetchAsync(url, payload) {
-    let response = await fetch(url, payload);
+async function fetchAsync(api, load) {
+    let response = await fetch(api, load);
     let data = await response.json();
     return data;
 }
@@ -16,7 +16,6 @@ function register() {
         "pass": password,
         "admin": admin
     };
-    console.log(auth);
     let payload = {
         method: 'post',
         headers: {
@@ -25,7 +24,6 @@ function register() {
         },
         body: JSON.stringify(auth)
     };
-    console.log(auth);
     if (password === passwordCheck) {
         fetchAsync(url, payload).then((resp) => {
             console.log(resp);

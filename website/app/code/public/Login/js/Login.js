@@ -1,11 +1,11 @@
-let url = "/api/login";
-    
-    
-    async function fetchAsync (url, payload) {
-        let response = await fetch(url, payload);
-        let data = await response.json();
-        return data;
-    }
+var url = "/api/login";
+
+
+async function fetchAsync(api, load) {
+    let response = await fetch(api, load);
+    let data = await response.json();
+    return data;
+}
 function login() {
     username = document.getElementById("Username").value;
     password = document.getElementById("Password").value;
@@ -23,7 +23,7 @@ function login() {
     };
     fetchAsync(url, payload).then((resp) => {
         console.log(payload);
-        if(resp["login"]) {
+        if (resp["login"]) {
             console.log("logged in");
             window.location.pathname = '/Login'
         } else {
@@ -33,6 +33,6 @@ function login() {
 }
 
 function logData() {
-    console.log(username +";" + password);
+    console.log(username + ";" + password);
 }
 
