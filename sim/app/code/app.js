@@ -152,9 +152,43 @@ app.get('/estates', (req, res) => {
   }).catch((err) => {
     console.log("ERROR /estates: " + err)
   })
-})
+});
 
-app.get('/powerplant', verify, (req, res) => {
+app.get('/estate', verifyUser, (req, res) => {
+    let sql = "SELECT * FROM Estates WHERE idEstates = " + req.user.estate;
+    query(sql).then((table) => {
+        res.json(table[0]);
+    }).catch((err) => {
+        console.log(err);
+        res.json(false);
+    });
+});
+
+app.post('/estate/set', verifyAdmin, (req, res) => {
+    let estate = req.body.estate;
+    let size = 14;
+    let sql = "UPDATE Estates SET batterySize = " + size + " WHERE idEstates = " + estate;
+    query(sql).then(() => {
+        res.json(true);
+    }).catch((err) => {
+        console.log(err);
+        res.json(false);
+    });
+}); 
+
+app.post('/estate/set/charging', verifyUser, (req, res) => {
+    let charging = req.body.charging;
+    let estate = req.user.estate;
+    let sql = "UPDATE Estates SET batteryCharging = " + charging +" WHERE idEstates = " + estate;
+    query(sql).then(() => {
+        res.json(true);
+    }).catch((err) => {
+        console.log(err);
+        res.json(false);
+    });
+});
+
+app.get('/powerplant', verifyAdmin, (req, res) => {
     let sql = "SELECT value FROM Powerplant ORDER BY idPowerplant DESC LIMIT 1";
     query(sql).then((table) => {
         res.json({"value": table[0]["value"]});
@@ -163,7 +197,7 @@ app.get('/powerplant', verify, (req, res) => {
     });
 })
 
-app.post('/powerplant/set', verify, (req, res) => {
+app.post('/powerplant/set', verifyAdmin, (req, res) => {
     let value = req.body.value;
     let sql = 'INSERT INTO Powerplant (value) VALUES (' + value + ')';
     query(sql).then(() => {
@@ -173,7 +207,7 @@ app.post('/powerplant/set', verify, (req, res) => {
     });
 })
 
-function verify(req, res, next) {
+function verifyAdmin(req, res, next) {
     const token = req.cookies["auth"];
     if(!token) {
         return res.status(401).send({auth: false});
@@ -186,6 +220,23 @@ function verify(req, res, next) {
             next();
         }
         else { return res.status(401).send({"auth": false}); }
+    } catch(err) {
+        console.log("Invalid token")
+        res.status(400).send({"auth": false});
+    }
+}
+
+function verifyUser(req, res, next) {
+    console.log(req.cookies);
+    const token = req.cookies["auth"];
+    if(!token) {
+        return res.status(401).send({auth: false});
+    }
+    try {
+        const verified = jwt.verify(token, secret);
+        req.user = verified;
+        console.log(req.user);
+        next();
     } catch(err) {
         console.log("Invalid token")
         res.status(400).send({"auth": false});
