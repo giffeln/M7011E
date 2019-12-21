@@ -28,3 +28,4 @@
 | 2019-12-19 | 5 | Tokens and login |
 | 2019-12-19 | 2 | Get/Set Powerplant |
 | 2019-12-20 | 5 | Backend functions for frontend |
+| 2019-12-21 | 4 | Assign estate to user, problem with auth between backend and api |
