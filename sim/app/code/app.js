@@ -1,5 +1,6 @@
 const express = require('express');
 const mariadb = require("mariadb");
+const set = require('./private/set');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
 const pool = mariadb.createPool({
@@ -30,6 +31,8 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, DELETE');
   next();
 });
+
+app.use('/set', set);
 
 app.get('/', (req, res) => {
   //url params
@@ -141,9 +144,10 @@ app.get('/wind', (req, res) => {
 
 app.get('/estates', (req, res) => {
   let sql;
+  console.log(req.query);
   let args = req.query;
   if(args.hasOwnProperty("estate")) {
-    sql = 'SELECT * FROM Estates WHERE idEstate = ' + args["estate"] + ';';
+    sql = 'SELECT * FROM Estates WHERE idEstates = ' + args["estate"];
   } else {
     sql = 'SELECT * FROM Estates;'
   }
@@ -164,46 +168,12 @@ app.get('/estate', verifyUser, (req, res) => {
     });
 });
 
-app.post('/estate/set', verifyAdmin, (req, res) => {
-    let estate = req.body.estate;
-    let size = 14;
-    let sql = "UPDATE Estates SET batterySize = " + size + " WHERE idEstates = " + estate;
-    query(sql).then(() => {
-        res.json(true);
-    }).catch((err) => {
-        console.log(err);
-        res.json(false);
-    });
-}); 
-
-app.post('/estate/set/charging', verifyUser, (req, res) => {
-    let charging = req.body.charging;
-    let estate = req.user.estate;
-    let sql = "UPDATE Estates SET batteryCharging = " + charging +" WHERE idEstates = " + estate;
-    query(sql).then(() => {
-        res.json(true);
-    }).catch((err) => {
-        console.log(err);
-        res.json(false);
-    });
-});
-
 app.get('/powerplant', verifyAdmin, (req, res) => {
     let sql = "SELECT value FROM Powerplant ORDER BY idPowerplant DESC LIMIT 1";
     query(sql).then((table) => {
         res.json({"value": table[0]["value"]});
     }).catch((err) => {
         res.json({"value": false});
-    });
-})
-
-app.post('/powerplant/set', verifyAdmin, (req, res) => {
-    let value = req.body.value;
-    let sql = 'INSERT INTO Powerplant (value) VALUES (' + value + ')';
-    query(sql).then(() => {
-        res.json({"valueSet": true});
-    }).catch((err) => {
-        res.json({"valueSet": false});
     });
 })
 
@@ -227,8 +197,8 @@ function verifyAdmin(req, res, next) {
 }
 
 function verifyUser(req, res, next) {
-    console.log(req.cookies);
-    const token = req.cookies["auth"];
+    console.log(req.body);
+    const token = req.body.auth;
     if(!token) {
         return res.status(401).send({auth: false});
     }

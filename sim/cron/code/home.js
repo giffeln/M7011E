@@ -118,7 +118,7 @@ function exit() {
 
 let sql = "SELECT * FROM Estates;";
 query(sql).then((table) => {
-    if (table.length == 100) {
+    if (table.length < 100) {
         generateHomes(100).then(() => {
             exit();
         }).catch(() => { exit(); });
