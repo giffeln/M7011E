@@ -29,3 +29,4 @@
 | 2019-12-19 | 2 | Get/Set Powerplant |
 | 2019-12-20 | 5 | Backend functions for frontend |
 | 2019-12-21 | 4 | Assign estate to user, problem with auth between backend and api |
+| 2019-12-22 | 2 | Communication between backend and API, spent 1/2 hour to find a one letter typo in an SQLquery |
