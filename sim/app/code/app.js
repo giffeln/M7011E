@@ -1,15 +1,8 @@
 const express = require('express');
-const mariadb = require("mariadb");
 const set = require('./private/set');
 const jwt = require('jsonwebtoken');
+const query = require('./private/query')
 const cookieParser = require('cookie-parser')
-const pool = mariadb.createPool({
-  host: "sim_db",
-  user: "node",
-  password: "node",
-  database: "sim_db",
-  connectionLimit: 5
-});
 
 // Constants
 const PORT = 8081;
@@ -26,6 +19,14 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use((req, res, next) => {
+  if(req.body.hasOwnProperty("token")){
+    try {
+      const verified = jwt.verify(req.body.token, secret);
+      req.user = verified;
+    } catch(err) {
+      console.log(err);
+    }
+  }
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, DELETE');
@@ -211,24 +212,6 @@ function verifyUser(req, res, next) {
         console.log("Invalid token")
         res.status(400).send({"auth": false});
     }
-}
-
-function query(sql) {
-    return new Promise(async (resolve, reject) => {
-        let conn;
-        try {
-            //conn = await pool.getConnection();
-            //var rows = await conn.query(sql);
-            let rows = await pool.query(sql);
-            resolve(rows);
-            //conn.release;
-        } catch (err) {
-            reject(err);
-            //conn.release;
-        } finally {
-            //if (conn) conn.release;
-        }
-    })
 }
 
 app.listen(PORT, HOST);
