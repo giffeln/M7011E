@@ -8,20 +8,36 @@ const pool = mariadb.createPool({
   connectionLimit: 5
 });
 
+//const root = "http://172.21.0.4:8081"
+//const root = "http://localhost:8081";
+const root = "https://api.projekt.giffeln.se";
+
 module.exports = {
-    setEstate: async function(user, estate, cookie) {
+    setEstate: async function(user, estate, token) {
         return new Promise(async (resolve, reject) => {
             let sql = "UPDATE Users SET estate = " + estate + " WHERE idUsers = " + user;
             let method = "POST";
-            let url = "https://api.projekt.giffeln.se/estate/set";
+            let url = root + "/set/estate";
             let data = {
-                "user": user, 
-                "estate": estate
+                "estate": estate,
+                "token": token
             };
             let sqlpromise = query(sql);
-            let webpromise = webrequest(method, url, data, cookie);
+            let webpromise = webrequest(method, url, data);
             Promise.all([sqlpromise, webpromise]).then(() => {
                 resolve(true);
+            }).catch((err) => {
+                console.log(err);
+                reject(false);
+            })
+        });
+    },
+    getEstate: async function(estate) {
+        return new Promise(async (resolve, reject) => {
+            let url = root + "/estates?estate=" + estate;
+            let method = "GET";
+            webrequest(method, url, {}).then((estateData) => {
+                resolve(estateData);
             }).catch((err) => {
                 console.log(err);
                 reject(false);
@@ -30,19 +46,17 @@ module.exports = {
     }
 }
 
-function webrequest(method, url, data, cookie) {
+function webrequest(method, url, data) {
     return new Promise(async (resolve, reject) => {
+        console.log("getting http from: " + url)
         request({
             "url": url,
             "method": method,
-            "json": data,
-            "header": {
-              'Cookie': cookie
-            }
+            "json": data
         }, function(err, resp){
             if(err) {reject(err);}
             else {
-                resolve(true);
+                resolve(resp.body[0]);
             }
         });
     });
