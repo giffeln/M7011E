@@ -130,9 +130,9 @@ app.get('/wind', (req, res) => {
   let args = req.query;
   if(args.hasOwnProperty("timeFrom")) {
     if(args.hasOwnProperty("timeTo")) {
-      sql = 'SELECT * FROM Wind WHERE time BETWEEN ' + mariadb.escape(args["timeFrom"]) + ' AND ' + mariadb.escape(args["timeTo"]) + ';';
+      sql = 'SELECT * FROM Wind WHERE time BETWEEN ' + pool.escape(args["timeFrom"]) + ' AND ' + pool.escape(args["timeTo"]) + ';';
     } else {
-      sql = 'SELECT * FROM Wind WHERE time >= ' + mariadb.escape(args["timeFrom"]) + ';';
+      sql = 'SELECT * FROM Wind WHERE time >= ' + pool.escape(args["timeFrom"]) + ';';
     }
   } else {
     sql = 'SELECT * from Wind ORDER BY idWind DESC LIMIT 500;'
