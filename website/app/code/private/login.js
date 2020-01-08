@@ -18,7 +18,7 @@ module.exports = {
             query(sql).then(async (table) => {
                 let pass = await bcrypt.compare(password, table[0]["password"])
                 if (table.length == 1 && pass) {
-                    let token = jwt.sign({"username": username, "admin": table[0]["admin"]}, secret, {expiresIn: "1 days"});
+                    let token = jwt.sign({"username": username, "admin": table[0]["admin"], "estate": table[0]["estate"]}, secret, {expiresIn: "1 days"});
                     resolve(token);
                 } else {
                     resolve(false);
@@ -78,6 +78,24 @@ module.exports = {
             const verified = jwt.verify(token, secret);
             req.user = verified;
             next();
+        } catch(err) {
+            console.log("Invalid token")
+            res.status(400).send();
+        }
+    },
+    verifyAdmin: function(req, res, next) {
+        const token = req.cookies["auth"];
+        if(!token) {
+            return res.status(401).send({auth: false});
+        }
+        try {
+            const verified = jwt.verify(token, secret);
+            req.user = verified;
+            console.log(req.user);
+            if(req.user.admin == 1) {
+                next();
+            }
+            else { return res.status(401).send({"auth": false}); }
         } catch(err) {
             console.log("Invalid token")
             res.status(400).send();

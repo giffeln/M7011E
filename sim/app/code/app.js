@@ -1,15 +1,16 @@
 const express = require('express');
-const mariadb = require("mariadb");
+const set = require('./private/set');
 const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser')
+const query = require('./private/query');
+const cookieParser = require('cookie-parser');
+const mariadb = require("mariadb");
 const pool = mariadb.createPool({
-  host: "sim_db",
-  user: "node",
-  password: "node",
-  database: "sim_db",
-  connectionLimit: 5
+    host: "sim_db",
+    user: "node",
+    password: "node",
+    database: "sim_db",
+    connectionLimit: 5
 });
-
 // Constants
 const PORT = 8081;
 const HOST = '0.0.0.0';
@@ -25,11 +26,21 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use((req, res, next) => {
+  if(req.body.hasOwnProperty("token")){
+    try {
+      const verified = jwt.verify(req.body.token, secret);
+      req.user = verified;
+    } catch(err) {
+      console.log(err);
+    }
+  }
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, DELETE');
   next();
 });
+
+app.use('/set', set);
 
 app.get('/', (req, res) => {
   //url params
@@ -37,22 +48,22 @@ app.get('/', (req, res) => {
 });
 
 app.get('/production', (req, res) => {
-  let sql;
+  let sql; 
   let args = req.query;
   if(args.hasOwnProperty("timeFrom")) {
     if(args.hasOwnProperty("timeTo")) {
       if(args.hasOwnProperty("estate")) {
-        sql = 'SELECT * FROM Production WHERE estate = ' + pool.escape(args["estate"]) + ' AND time BETWEEN ' + pool.escape(args["timeFrom"]) + ' AND ' + pool.escape(args["timeTo"]) + ';';
+        sql = 'SELECT * FROM Production WHERE estate = ' + pool.escape(args["estate"]) + ' AND time BETWEEN ' + pool.escape(args["timeFrom"]) + ' AND ' + pool.escape(args["timeTo"]) + ' ORDER BY idProduction DESC LIMIT 500;';
       } else {
-        sql = 'SELECT * FROM Production WHERE time BETWEEN ' + pool.escape(args["timeFrom"]) + ' AND ' + pool.escape(args["timeTo"]) + ';';
+        sql = 'SELECT * FROM Production WHERE time BETWEEN ' + pool.escape(args["timeFrom"]) + ' AND ' + pool.escape(args["timeTo"]) + ' ORDER BY idProduction DESC LIMIT 500;';
       }
     } else {
       let date = new Date();
       let timestamp = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2) + " " + date.getHours() + ":" + date.getMinutes() + ":00"; 
       if(args.hasOwnProperty("estate")) {
-        sql = 'SELECT * FROM Production WHERE estate = ' + pool.escape(args["estate"]) + ' AND time >= ' + pool.escape(args["timeFrom"]) + ';';
+        sql = 'SELECT * FROM Production WHERE estate = ' + pool.escape(args["estate"]) + ' AND time >= ' + pool.escape(args["timeFrom"]) + ' ORDER BY idProduction DESC LIMIT 500;';
       } else {
-        sql = 'SELECT * FROM Production WHERE time >= ' + pool.escape(args["timeFrom"]) + ';';
+        sql = 'SELECT * FROM Production WHERE time >= ' + pool.escape(args["timeFrom"]) + ' ORDER BY idProduction DESC LIMIT 500;';
       }
     }
   } else {
@@ -81,17 +92,17 @@ app.get('/consumption', (req, res) => {
   if(args.hasOwnProperty("timeFrom")) {
     if(args.hasOwnProperty("timeTo")) {
       if(args.hasOwnProperty("estate")) {
-        sql = 'SELECT * FROM Consumption WHERE estate = ' + pool.escape(args["estate"]) + ' AND time BETWEEN ' + pool.escape(args["timeFrom"]) + ' AND ' + pool.escape(args["timeTo"]) + ';';
+        sql = 'SELECT * FROM Consumption WHERE estate = ' + pool.escape(args["estate"]) + ' AND time BETWEEN ' + pool.escape(args["timeFrom"]) + ' AND ' + pool.escape(args["timeTo"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
       } else {
-        sql = 'SELECT * FROM Consumption WHERE time BETWEEN ' + pool.escape(args["timeFrom"]) + ' AND ' + pool.escape(args["timeTo"]) + ';';
+        sql = 'SELECT * FROM Consumption WHERE time BETWEEN ' + pool.escape(args["timeFrom"]) + ' AND ' + pool.escape(args["timeTo"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
       }
     } else {
       let date = new Date();
       let timestamp = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2) + " " + date.getHours() + ":" + date.getMinutes() + ":00"; 
       if(args.hasOwnProperty("estate")) {
-        sql = 'SELECT * FROM Consumption WHERE estate = ' + pool.escape(args["estate"]) + ' AND time >= ' + pool.escape(args["timeFrom"]) + ';';
+        sql = 'SELECT * FROM Consumption WHERE estate = ' + pool.escape(args["estate"]) + ' AND time >= ' + pool.escape(args["timeFrom"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
       } else {
-        sql = 'SELECT * FROM Consumption WHERE time >= ' + pool.escape(args["timeFrom"]) + ';';
+        sql = 'SELECT * FROM Consumption WHERE time >= ' + pool.escape(args["timeFrom"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
       }
     }
   } else {
@@ -141,9 +152,10 @@ app.get('/wind', (req, res) => {
 
 app.get('/estates', (req, res) => {
   let sql;
+  console.log(req.query);
   let args = req.query;
   if(args.hasOwnProperty("estate")) {
-    sql = 'SELECT * FROM Estates WHERE idEstate = ' + args["estate"] + ';';
+    sql = 'SELECT * FROM Estates WHERE idEstates = ' + args["estate"];
   } else {
     sql = 'SELECT * FROM Estates;'
   }
@@ -155,36 +167,12 @@ app.get('/estates', (req, res) => {
 });
 
 app.get('/estate', verifyUser, (req, res) => {
-    let sql = "SELECT * FROM Estates WHERE idEstates = " + req.user.estate;
+    let sql = "SELECT * FROM Estates WHERE idEstates = " + req.query.estate;
     query(sql).then((table) => {
         res.json(table[0]);
     }).catch((err) => {
         console.log(err);
-        res.json(false);
-    });
-});
-
-app.post('/estate/set', verifyAdmin, (req, res) => {
-    let estate = req.body.estate;
-    let size = 14;
-    let sql = "UPDATE Estates SET batterySize = " + size + " WHERE idEstates = " + estate;
-    query(sql).then(() => {
-        res.json(true);
-    }).catch((err) => {
-        console.log(err);
-        res.json(false);
-    });
-}); 
-
-app.post('/estate/set/charging', verifyUser, (req, res) => {
-    let charging = req.body.charging;
-    let estate = req.user.estate;
-    let sql = "UPDATE Estates SET batteryCharging = " + charging +" WHERE idEstates = " + estate;
-    query(sql).then(() => {
-        res.json(true);
-    }).catch((err) => {
-        console.log(err);
-        res.json(false);
+        res.json(err);
     });
 });
 
@@ -194,16 +182,6 @@ app.get('/powerplant', verifyAdmin, (req, res) => {
         res.json({"value": table[0]["value"]});
     }).catch((err) => {
         res.json({"value": false});
-    });
-})
-
-app.post('/powerplant/set', verifyAdmin, (req, res) => {
-    let value = req.body.value;
-    let sql = 'INSERT INTO Powerplant (value) VALUES (' + value + ')';
-    query(sql).then(() => {
-        res.json({"valueSet": true});
-    }).catch((err) => {
-        res.json({"valueSet": false});
     });
 })
 
@@ -227,8 +205,8 @@ function verifyAdmin(req, res, next) {
 }
 
 function verifyUser(req, res, next) {
-    console.log(req.cookies);
-    const token = req.cookies["auth"];
+    console.log(req.body);
+    const token = req.body.auth;
     if(!token) {
         return res.status(401).send({auth: false});
     }
@@ -241,24 +219,6 @@ function verifyUser(req, res, next) {
         console.log("Invalid token")
         res.status(400).send({"auth": false});
     }
-}
-
-function query(sql) {
-    return new Promise(async (resolve, reject) => {
-        let conn;
-        try {
-            //conn = await pool.getConnection();
-            //var rows = await conn.query(sql);
-            let rows = await pool.query(sql);
-            resolve(rows);
-            //conn.release;
-        } catch (err) {
-            reject(err);
-            //conn.release;
-        } finally {
-            //if (conn) conn.release;
-        }
-    })
 }
 
 app.listen(PORT, HOST);
