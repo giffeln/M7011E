@@ -84,4 +84,8 @@ app.get("/get/estate", login.verify, (req, res) => {
     }
 });
 
+app.get("/get/username", login.verify, (req, res) => {
+    res.json({"username": req.user.username});
+})
+
 module.exports = app;

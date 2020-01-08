@@ -135,7 +135,8 @@ function main() {
                 sql = "INSERT INTO Production (value, estate, time) VALUES (" + plant + ", NULL, " + '"' + timestamp + '"), ';
                 for(let i = 0; i < estates.length; i++) {
                     let home = estates[i];
-                    sql = sql + "(" + power + ", " + home["idEstates"] + ', "' + timestamp + '"), ';
+                    let tempPower = (Math.random() * (1.2 - 0.8) + 0.8).toFixed(3) * power;
+                    sql = sql + "(" + tempPower + ", " + home["idEstates"] + ', "' + timestamp + '"), ';
                 }
                 sql = sql.slice(0, -2);
             } else {
