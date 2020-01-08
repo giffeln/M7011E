@@ -27,7 +27,7 @@ function register() {
     if (password === passwordCheck) {
         fetchAsync(url, payload).then((resp) => {
             console.log(resp);
-            if (register) {
+            if (resp) {
                 console.log("logged in");
                 window.location.pathname = ''
             } else {
