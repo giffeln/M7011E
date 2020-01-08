@@ -4,6 +4,13 @@ const jwt = require('jsonwebtoken');
 const query = require('./private/query');
 const cookieParser = require('cookie-parser');
 const mariadb = require("mariadb");
+const pool = mariadb.createPool({
+    host: "sim_db",
+    user: "node",
+    password: "node",
+    database: "sim_db",
+    connectionLimit: 5
+});
 // Constants
 const PORT = 8081;
 const HOST = '0.0.0.0';
@@ -46,22 +53,22 @@ app.get('/production', (req, res) => {
   if(args.hasOwnProperty("timeFrom")) {
     if(args.hasOwnProperty("timeTo")) {
       if(args.hasOwnProperty("estate")) {
-        sql = 'SELECT * FROM Production WHERE estate = ' + mariadb.escape(args["estate"]) + ' AND time BETWEEN ' + mariadb.escape(args["timeFrom"]) + ' AND ' + mariadb.escape(args["timeTo"]) + ' ORDER BY idProduction DESC LIMIT 500;';
+        sql = 'SELECT * FROM Production WHERE estate = ' + pool.escape(args["estate"]) + ' AND time BETWEEN ' + pool.escape(args["timeFrom"]) + ' AND ' + pool.escape(args["timeTo"]) + ' ORDER BY idProduction DESC LIMIT 500;';
       } else {
-        sql = 'SELECT * FROM Production WHERE time BETWEEN ' + mariadb.escape(args["timeFrom"]) + ' AND ' + mariadb.escape(args["timeTo"]) + ' ORDER BY idProduction DESC LIMIT 500;';
+        sql = 'SELECT * FROM Production WHERE time BETWEEN ' + pool.escape(args["timeFrom"]) + ' AND ' + pool.escape(args["timeTo"]) + ' ORDER BY idProduction DESC LIMIT 500;';
       }
     } else {
       let date = new Date();
       let timestamp = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2) + " " + date.getHours() + ":" + date.getMinutes() + ":00"; 
       if(args.hasOwnProperty("estate")) {
-        sql = 'SELECT * FROM Production WHERE estate = ' + mariadb.escape(args["estate"]) + ' AND time >= ' + mariadb.escape(args["timeFrom"]) + ' ORDER BY idProduction DESC LIMIT 500;';
+        sql = 'SELECT * FROM Production WHERE estate = ' + pool.escape(args["estate"]) + ' AND time >= ' + pool.escape(args["timeFrom"]) + ' ORDER BY idProduction DESC LIMIT 500;';
       } else {
-        sql = 'SELECT * FROM Production WHERE time >= ' + mariadb.escape(args["timeFrom"]) + ' ORDER BY idProduction DESC LIMIT 500;';
+        sql = 'SELECT * FROM Production WHERE time >= ' + pool.escape(args["timeFrom"]) + ' ORDER BY idProduction DESC LIMIT 500;';
       }
     }
   } else {
     if(args.hasOwnProperty("estate")) {
-      sql = 'SElECT * from Production WHERE estate = ' + mariadb.escape(args["estate"]) + ' ORDER BY "idProduction" DESC LIMIT 500;';
+      sql = 'SElECT * from Production WHERE estate = ' + pool.escape(args["estate"]) + ' ORDER BY "idProduction" DESC LIMIT 500;';
     } else {
       sql = 'SELECT * from Production ORDER BY idProduction DESC LIMIT 500;'
     }
@@ -85,22 +92,22 @@ app.get('/consumption', (req, res) => {
   if(args.hasOwnProperty("timeFrom")) {
     if(args.hasOwnProperty("timeTo")) {
       if(args.hasOwnProperty("estate")) {
-        sql = 'SELECT * FROM Consumption WHERE estate = ' + mariadb.escape(args["estate"]) + ' AND time BETWEEN ' + mariadb.escape(args["timeFrom"]) + ' AND ' + mariadb.escape(args["timeTo"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
+        sql = 'SELECT * FROM Consumption WHERE estate = ' + pool.escape(args["estate"]) + ' AND time BETWEEN ' + pool.escape(args["timeFrom"]) + ' AND ' + pool.escape(args["timeTo"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
       } else {
-        sql = 'SELECT * FROM Consumption WHERE time BETWEEN ' + mariadb.escape(args["timeFrom"]) + ' AND ' + mariadb.escape(args["timeTo"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
+        sql = 'SELECT * FROM Consumption WHERE time BETWEEN ' + pool.escape(args["timeFrom"]) + ' AND ' + pool.escape(args["timeTo"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
       }
     } else {
       let date = new Date();
       let timestamp = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2) + " " + date.getHours() + ":" + date.getMinutes() + ":00"; 
       if(args.hasOwnProperty("estate")) {
-        sql = 'SELECT * FROM Consumption WHERE estate = ' + mariadb.escape(args["estate"]) + ' AND time >= ' + mariadb.escape(args["timeFrom"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
+        sql = 'SELECT * FROM Consumption WHERE estate = ' + pool.escape(args["estate"]) + ' AND time >= ' + pool.escape(args["timeFrom"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
       } else {
-        sql = 'SELECT * FROM Consumption WHERE time >= ' + mariadb.escape(args["timeFrom"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
+        sql = 'SELECT * FROM Consumption WHERE time >= ' + pool.escape(args["timeFrom"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
       }
     }
   } else {
     if(args.hasOwnProperty("estate")) {
-      sql = 'SElECT * from Consumption WHERE estate = ' + mariadb.escape(args["estate"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
+      sql = 'SElECT * from Consumption WHERE estate = ' + pool.escape(args["estate"]) + ' ORDER BY "idConsumption" DESC LIMIT 500;';
     } else {
       sql = 'SELECT * from Consumption ORDER BY idConsumption DESC LIMIT 500;'
     }
