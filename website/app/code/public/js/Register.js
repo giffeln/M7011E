@@ -29,7 +29,7 @@ function register() {
             console.log(resp);
             if (resp["register"]) {
                 console.log("logged in");
-                window.location.pathname = '/Login'
+                window.location.pathname = ''
             } else {
                 console.log("not logged in");
             }
