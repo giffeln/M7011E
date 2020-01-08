@@ -9,7 +9,7 @@ const pool = mariadb.createPool({
   connectionLimit: 5
 });
 
-const secret = "aspkgfjASÖPOLjhkwepq23oijrn2punf";
+const secret = "D4n Humphr3y i5 G0s5ip 6ir1";
 
 module.exports = {
     login: async function(username, password) {
@@ -72,7 +72,7 @@ module.exports = {
     verify: function(req, res, next) {
         const token = req.cookies["auth"];
         if(!token) {
-            return res.status(401).send({auth: false});
+            return res.status(401).json(false);
         }
         try {
             const verified = jwt.verify(token, secret);
@@ -80,7 +80,7 @@ module.exports = {
             next();
         } catch(err) {
             console.log("Invalid token")
-            res.status(400).send();
+            res.status(400).json(false);
         }
     },
     verifyAdmin: function(req, res, next) {
