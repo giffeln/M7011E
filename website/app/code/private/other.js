@@ -70,6 +70,17 @@ module.exports = {
                 resolve(availableEstates);
             });
         });
+    },
+    getUsers: async function() {
+        return new Promise(async (resolve, reject) => {
+            let sql = "SELECT idUsers, username, estate, admin FROM Users;"
+            query(sql).then((table) => {
+                resolve(table);
+            }).catch((err) => {
+                console.log(err);
+                reject(false);
+            });
+        });
     }
 }
 

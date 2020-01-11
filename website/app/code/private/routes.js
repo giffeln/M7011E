@@ -97,6 +97,19 @@ app.get("/get/availableEstates", login.verifyAdmin, (req, res) => {
     });
 });
 
+app.get("/get/users", (req, res) => {
+    other.getUsers().then((users) => {
+        if(users) {
+            res.json(users);
+        } else {
+            res.json(false);
+        }
+    }).catch((err) => {
+        console.log(err);
+        res.json(false);
+    });
+});
+
 app.get("/get/username", login.verify, (req, res) => {
     res.json({"username": req.user.username});
 })
