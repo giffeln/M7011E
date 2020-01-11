@@ -184,38 +184,4 @@ function main() {
     });
 }
 
-/*
-async function main() {
-    let power = calcPow();
-    let timestamp = getTimestamp();
-    insertPlantPower(timestamp).then().catch((err) => {console.log(err)});
-    let sql = "INSERT INTO Wind (value, time) VALUES (" + windspeed + ', "' + timestamp + '");';
-    query(sql).then((table) => {
-        sql = "SELECT * FROM Estates WHERE batterySize > 0;";
-        query(sql).then((table) => {
-            if(table.length >= 1) {
-                sql = "INSERT INTO Production (value, estate, time) VALUES (" + ")";
-                for(let i = 0; i < table.length; i++) {
-                    let home = table[i];
-                    sql = sql + "(" + power + ", " + home["idEstates"] + ', "' + timestamp + '"), ';
-                }
-                sql = sql.slice(0, -2) + ";";
-                query(sql).then((table) => {
-                    process.exit();
-                }).catch((err) => {
-                    console.log("Error: " + err);
-                    process.exit();
-                })
-            } else { process.exit(); }
-        }).catch((err) => {
-            console.log("Error: " + err);
-            process.exit();
-        })
-    }).catch((err) => {
-        console.log("Error: " + err);
-        process.exit();
-        return false;
-    })
-}*/
-
 main();
