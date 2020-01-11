@@ -14,7 +14,7 @@ const pool = mariadb.createPool({
 // Constants
 const PORT = 8081;
 const HOST = '0.0.0.0';
-const secret = "aspkgfjASÖPOLjhkwepq23oijrn2punf";
+const secret = "D4n Humphr3y i5 G0s5ip 6ir1";
 
 // App
 const app = express();
@@ -74,7 +74,6 @@ app.get('/production', (req, res) => {
     }
   }
   query(sql).then((table) => {
-    console.log(table.length);
     if (table.length > 1 && table[0]["idProduction"] > table[1]["idProduction"]) {
       res.send(table.reverse());
     } else {

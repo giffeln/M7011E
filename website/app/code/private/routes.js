@@ -84,6 +84,32 @@ app.get("/get/estate", login.verify, (req, res) => {
     }
 });
 
+app.get("/get/availableEstates", login.verifyAdmin, (req, res) => {
+    other.getAvailableEstates().then((estates) => {
+        if(estates) {
+            res.json(estates);
+        } else {
+            res.json(false);
+        }
+    }).catch((err) => {
+        console.log(err);
+        res.json(false);
+    });
+});
+
+app.get("/get/users", login.verifyAdmin, (req, res) => {
+    other.getUsers().then((users) => {
+        if(users) {
+            res.json(users);
+        } else {
+            res.json(false);
+        }
+    }).catch((err) => {
+        console.log(err);
+        res.json(false);
+    });
+});
+
 app.get("/get/username", login.verify, (req, res) => {
     res.json({"username": req.user.username});
 })

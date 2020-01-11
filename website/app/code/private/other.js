@@ -43,10 +43,74 @@ module.exports = {
                 reject(false);
             })
         });
+    },
+    getAvailableEstates: async function() {
+        return new Promise(async (resolve, reject) => {
+            let sqlpromise = getUsers();
+            let webpromise = getEstates();
+            Promise.all([sqlpromise, webpromise]).then((values) => {
+                let users = values[0];
+                let estates = values[1];
+                if(!estates || !users) {
+                    reject(false);
+                }
+                let nonAvailableEstates = [];
+                let availableEstates = [];
+                users.forEach(user => {
+                    if(user["estate"] != null) {
+                        nonAvailableEstates.push(user["estate"]);
+                    }
+                });
+                estates.forEach(estate => {
+                    if(!nonAvailableEstates.includes(estate["idEstates"])) {
+                        availableEstates.push(estate);
+                    }
+                });
+                console.log(users);
+                resolve(availableEstates);
+            });
+        });
+    },
+    getUsers: async function() {
+        return new Promise(async (resolve, reject) => {
+            let sql = "SELECT idUsers, username, estate, admin FROM Users;"
+            query(sql).then((table) => {
+                resolve(table);
+            }).catch((err) => {
+                console.log(err);
+                reject(false);
+            });
+        });
     }
 }
 
-function webrequest(method, url, data) {
+async function getEstates() {
+    return new Promise(async (resolve, reject) => {
+        let url = root + "/estates";
+        let method = "GET";
+        webrequest(method, url, {}).then((estateData) => {
+            //console.log(estateData);
+            resolve(estateData);
+        }).catch((err) => {
+            console.log(err);
+            reject(false);
+        });
+    });
+}
+
+async function getUsers() {
+    return new Promise(async (resolve, reject) => {
+        let sql = "SELECT * FROM Users WHERE estate IS NOT NULL";
+        query(sql).then((table) => {
+            resolve(table);
+        }).catch((err) => {
+            console.log(err);
+            reject(false);
+        });
+    });
+}
+
+function webrequest(method, url, data = {}) {
     return new Promise(async (resolve, reject) => {
         console.log("getting http from: " + url)
         request({
@@ -56,7 +120,11 @@ function webrequest(method, url, data) {
         }, function(err, resp){
             if(err) {reject(err);}
             else {
-                resolve(resp.body[0]);
+                if(resp.body.length == 1) {
+                    resolve(resp.body[0]);
+                } else {
+                    resolve(resp.body);
+                }
             }
         });
     });
