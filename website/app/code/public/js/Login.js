@@ -27,10 +27,9 @@ function login() {
         body: JSON.stringify(auth)
     };
     fetchAsync(url, payload).then((resp) => {
-        console.log(payload);
         if (resp) {
             console.log("logged in");
-            window.location.pathname = ''
+            setSession();
         } else {
             console.log("not logged in");
         }
@@ -56,6 +55,24 @@ function checkLogin() {
 
 }
 
+function setSession(){
+    sessionStorage.setItem("logged_in", true);
+    let url = "http://localhost:8080/api/admin";
+    async function fetchAsync(url) {
+        let response = await fetch(url);
+        let data = await response.json();
+        return data;
+    }
+
+    data = fetchAsync(url).then((resp) => {
+        if(resp){
+            sessionStorage.setItem("admin", true);
+        } else {
+            sessionStorage.setItem("admin", false)
+        }
+        window.location.pathname = ''
+    });
+}
 
 function logData() {
     console.log(username + ";" + password);

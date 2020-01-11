@@ -1,12 +1,42 @@
+window.onload = function () {
+    if (sessionStorage.getItem("logged_in")) {
+        let url = "http://localhost:8080/api/get/username";
+        async function fetchAsync(url) {
+            let response = await fetch(url);
+            let data = await response.json();
+            return data;
+        }
+
+        data = fetchAsync(url).then((resp) => {
+            document.getElementById("username").innerHTML = resp.username;
+            document.getElementById("userDropdown").setAttribute("data-toggle", "dropdown");
+        });
+        console.log(sessionStorage.getItem("admin"));
+        console.log(sessionStorage.getItem("logged_in"));
+    } else {
+        let dropdown = document.getElementById("userDropdown");
+        dropdown.setAttribute("data-toggle", "");
+        dropdown.href = "login.html";
+        document.getElementById("username").innerHTML = "Login";
+    }
+}
+
 $('.collapse-item').click(function () {
-    var page = $(this).attr('href');
-    $('.collapse-item').removeClass("active");
-    $(this).addClass("active")
-    // }
-    $("#Main").load(page, function () {
-        getDataToTable();
-    })
-    return false;
+    if (sessionStorage.getItem("logged_in")) {
+        var page = $(this).attr('href');
+        $('.collapse-item').removeClass("active");
+        $(this).addClass("active")
+        // }
+        $("#Main").load(page, function () {
+            getDataToTable();
+        })
+        return false;
+    } else {
+        $("#Main").load("tables/table_not_logged_in.html", function () {
+            
+        })
+        return false;
+    }
 })
 
 $('.logout').click(function () {
@@ -19,10 +49,10 @@ $('.logout').click(function () {
     }
 
     data = fetchAsync(url).then((resp) => {
-        console.log(resp);
+        sessionStorage.clear();
         window.location.pathname = '/login.html'
     });
-    
+
     return false;
 })
 
@@ -38,7 +68,6 @@ $('.profile').click(function () {
 function getDataToTable() {
     var dataToGet = document.getElementById("headerName").innerText.toLowerCase();
     let url = "https://api.projekt.giffeln.se/" + dataToGet;
-    console.log(url)
 
     async function fetchAsync(url) {
         let response = await fetch(url);
@@ -53,13 +82,12 @@ function getDataToTable() {
 }
 
 function getData(dataToGet, estateId) {
-    if(estateId == undefined){
+    if (estateId == undefined) {
         var estateIdString = "";
     } else {
         var estateIdString = "?estate=" + estateId
     }
     let url = "https://api.projekt.giffeln.se/" + dataToGet + estateIdString;
-    console.log(url)
 
     async function fetchAsync(url) {
         let response = await fetch(url);
@@ -152,4 +180,8 @@ function setNetConsumption() {
 function setCurrent(data, array) {
     let div = document.getElementById(data);
     div.innerHTML += array[array.length - 1].value.toFixed(2);
+}
+
+function setUserName() {
+
 }
