@@ -86,7 +86,7 @@ app.get("/get/estate", login.verify, (req, res) => {
 
 app.get("/get/availableEstates", login.verifyAdmin, (req, res) => {
     other.getAvailableEstates().then((estates) => {
-        if(estates && estates.length != 0) {
+        if(estates) {
             res.json(estates);
         } else {
             res.json(false);
