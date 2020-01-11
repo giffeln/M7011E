@@ -1,26 +1,31 @@
 version: "3.3"
 
 services: 
-  app:
+  sim_app:
     build: ./app
     command: nodemon app.js
-    container_name: M7011E_sim
+    container_name: M7011E_sim_app
     ports: 
-      - "8080:8080"
+      - "8081:8081"
     networks: 
-      - db_network
+      - sim_network
     volumes:
       - ./app/code:/home/node/app
     depends_on:
-      - db
-  db:
+      - sim_db
+  sim_cron:
+    build: ./cron
+    container_name: M7011E_sim_cron
+    networks:
+      - sim_network
+    depends_on:
+      - sim_db
+  sim_db:
     build: ./db
-    container_name: M7011E_db2
-    ports:
-      - "8086:8086"
+    container_name: M7011E_sim_db
     networks: 
-      - db_network
-    hostname: db
+      - sim_network
+    hostname: sim_db
     environment:
       MYSQL_ROOT_PASSWORD: node
       MYSQL_DATABASE: sim_db
@@ -29,5 +34,5 @@ services:
     volumes:
       - ./db/mariadb-data:/var/lib/mysql
 networks: 
-  db_network:
+  sim_network:
     driver: bridge

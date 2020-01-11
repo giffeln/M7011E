@@ -1,44 +1,23 @@
-'use strict';
+const routes = require('./private/routes');
+const express = require("express");
+const cookieParser = require('cookie-parser');
 
-const express = require('express');
-const mariadb = require("mariadb");
-/*const pool = mariadb.createPool({
-  host: "db",
-  user: "node",
-  password: "node",
-  database: "web_db",
-  connectionLimit: 5
-})*/
-
-// Constants
-const PORT = 8080;
-const HOST = '0.0.0.0';
-
-// App
 const app = express();
-app.get('/', (req, res) => {
-  /*query("SELECT * FROM Users").then((table) => {
-    res.send(table);
-  }).catch((err) => {
-    console.log(err);
-  })*/
-  res.send("M7011E Website Placeholder")
+const port = 8080;
+
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.static("public"));
+
+app.use("/api", apiHeader, routes);
+
+app.listen(port, function() {
+    console.log("backend running at: " + port);
 });
 
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
-
-/*function query(sql) {
-  return new Promise(async (resolve, reject) => {
-    let conn;
-    try {
-      conn = await pool.getConnection();
-      var rows = await conn.query(sql);
-      resolve(rows);
-    } catch (err) {
-      reject(err)
-    } finally {
-      if (conn) conn.end;
-    }
-  })
-}*/
+function apiHeader(req, res, next) {
+    res.header('Accept', 'application/json, text/plain, */*');
+    res.header('Content-Type', 'application/json');
+    //console.log(`${req.ip} ${req.method} ${req.url}`);
+    next();
+}

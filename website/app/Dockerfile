@@ -5,6 +5,8 @@ RUN npm install -g nodemon
 USER node
 COPY --chown=node:node ./code/ .
 RUN npm install
+WORKDIR /home/node/app/server
+RUN npm install
 WORKDIR /home/node/app
 EXPOSE 8080
 CMD [ "node", "app.js"]
