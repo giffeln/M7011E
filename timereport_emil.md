@@ -31,4 +31,4 @@
 | 2019-12-21 | 4 | Assign estate to user, problem with auth between backend and api |
 | 2019-12-22 | 2 | Communication between backend and API, spent 1/2 hour to find a one letter typo in an SQLquery |
 | 2020-01-08 | 6 | Adding and changing whatever oskar needed and a bunch of small corrections |
-| 2020-01-11 | 4 | Adding functions for Oskar and making the batteries charge |
+| 2020-01-11 | 5 | Adding functions for Oskar, making the batteries charge and github maintenance |
