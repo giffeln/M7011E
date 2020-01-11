@@ -74,7 +74,6 @@ app.get('/production', (req, res) => {
     }
   }
   query(sql).then((table) => {
-    console.log(table.length);
     if (table.length > 1 && table[0]["idProduction"] > table[1]["idProduction"]) {
       res.send(table.reverse());
     } else {

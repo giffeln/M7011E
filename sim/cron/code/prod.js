@@ -13,7 +13,7 @@ let maxwind = 25;
 let optimalWind = 15;
 let windspeed;
 setWindSpeed();
-let bladeLength = 1.5;
+let bladeLength = 2.5;
 
 //Output = CPoa x A x PA x G 
 let CPoa = 0.35;                                        //CPoa = aerodynamic power coefficient
@@ -120,6 +120,25 @@ function exit() {
     });
 }
 
+function addToBattery(estate, power) {
+    return new Promise(async (resolve, reject) => {
+        if(estate.batteryCharging == 0 || estate.batteryCharge / 1000 >= estate.batterySize) {resolve(true);}
+        let batteryCharge = ((power/12) * estate.batteryCharging) + estate.batteryCharge;
+        if (batteryCharge > estate.batterySize * 1000) {
+            batteryCharge = estate.batterySize * 1000;
+        }
+        if(batteryCharge != estate.batteryCharge) {
+            let sql = "UPDATE Estates SET batteryCharge = " + batteryCharge + " WHERE idEstates = " + estate.idEstates;
+            query(sql).then(() => {
+                resolve(true);
+            }).catch((err) => {
+                console.log(err);
+                reject(false);
+            });
+        }
+    })
+}
+
 function main() {
     let power = calcPow();
     let timestamp = getTimestamp();
@@ -131,14 +150,18 @@ function main() {
         let wind = values[1];
         let estates = values[2];
         if(wind && plant !== false && estates !== false) {
+            let promises = [];
             if(estates.length >= 1) {
                 sql = "INSERT INTO Production (value, estate, time) VALUES (" + plant + ", NULL, " + '"' + timestamp + '"), ';
                 for(let i = 0; i < estates.length; i++) {
                     let home = estates[i];
+                    //console.log(home);
+                    promises.push(addToBattery(home, power));
                     //let tempPower = (Math.random() * (1.2 - 0.8) + 0.8).toFixed(3) * power;
                     sql = sql + "(" + power + ", " + home["idEstates"] + ', "' + timestamp + '"), ';
                 }
                 sql = sql.slice(0, -2);
+                console.log(sql);
             } else {
                 sql = "INSERT INTO Production (value, estate, time) VALUES (" + plant + ", NULL, " + '"' + timestamp + '")';
             }
@@ -147,7 +170,12 @@ function main() {
             }).catch((err) => {
                 console.log("Production Error 1: " + err);
             }).finally(() => {
-                exit();
+                Promise.all(promises).then(() => {
+                    exit();
+                }).catch((err) => {
+                    console.log(err);
+                    exit();
+                });
             });
         } else {
             console.log("Production Error 2");
