@@ -97,7 +97,7 @@ app.get("/get/availableEstates", login.verifyAdmin, (req, res) => {
     });
 });
 
-app.get("/get/users", (req, res) => {
+app.get("/get/users", login.verifyAdmin, (req, res) => {
     other.getUsers().then((users) => {
         if(users) {
             res.json(users);
