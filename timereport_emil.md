@@ -32,3 +32,4 @@
 | 2019-12-22 | 2 | Communication between backend and API, spent 1/2 hour to find a one letter typo in an SQLquery |
 | 2020-01-08 | 6 | Adding and changing whatever oskar needed and a bunch of small corrections |
 | 2020-01-11 | 5 | Adding functions for Oskar, making the batteries charge and github maintenance |
+| 2020-01-12 | 6 | Changing Wind sim |
