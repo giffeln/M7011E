@@ -11,8 +11,9 @@ window.onload = function () {
             document.getElementById("username").innerHTML = resp.username;
             document.getElementById("userDropdown").setAttribute("data-toggle", "dropdown");
         });
-        console.log(sessionStorage.getItem("admin"));
-        console.log(sessionStorage.getItem("logged_in"));
+        if(this.sessionStorage.getItem("admin") === 'true'){
+            setAdminLinks();
+        }
     } else {
         let dropdown = document.getElementById("userDropdown");
         dropdown.setAttribute("data-toggle", "");
@@ -26,7 +27,6 @@ $('.collapse-item').click(function () {
         var page = $(this).attr('href');
         $('.collapse-item').removeClass("active");
         $(this).addClass("active")
-        // }
         $("#Main").load(page, function () {
             getDataToTable();
         })
@@ -63,6 +63,14 @@ $('.profile').click(function () {
     })
     return false;
 })
+
+$('.admin').click(function () {
+    var page = "admin_board.html";
+    $("#Main").load(page, function () {
+        showAdminSecrets();
+    })
+    return false;
+});
 
 
 function getDataToTable() {
@@ -103,6 +111,7 @@ function getData(dataToGet, estateId) {
     return data;
 }
 
+
 function getEstateId() {
     let url = "/api/get/estate";
     console.log(url)
@@ -114,11 +123,12 @@ function getEstateId() {
     }
 
     data = fetchAsync(url).then((resp) => {
+        console.log("ping");
         loadUserDashboard(resp.idEstates);
-        document.getElementById("buffer").innerHTML += resp.batteryCharge;
+        document.getElementById("buffer").innerHTML = resp.batteryCharge;
 
     });
-    return data;
+    return true;
 }
 
 function checkUserLogin() {
@@ -169,7 +179,7 @@ function loadUserDashboard(estateId) {
     let consumption = getData("consumption", estateId);
     let production = getData("production");
     Promise.all([consumption, production]).then(function (values) {
-        document.getElementById("net").innerHTML += (values[0][values[0].length - 1].value.toFixed(2) - values[1][values[0].length - 1].value.toFixed(2));
+        document.getElementById("net").innerHTML = (values[0][values[0].length - 1].value.toFixed(2) - values[1][values[0].length - 1].value.toFixed(2));
     })
 }
 
@@ -179,9 +189,13 @@ function setNetConsumption() {
 
 function setCurrent(data, array) {
     let div = document.getElementById(data);
-    div.innerHTML += array[array.length - 1].value.toFixed(2);
+    div.innerHTML = array[array.length - 1].value.toFixed(2);
 }
 
-function setUserName() {
+function setAdminLinks(){
+    $('.admin').removeClass("hide");
+}
 
+function showAdminSecrets(){
+    $('#hidden_body').removeClass("hide");
 }
