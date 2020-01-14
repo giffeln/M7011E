@@ -60,6 +60,17 @@ app.post("/register", async (req, res) => {
     })
 });
 
+app.post("/set/charging", login.verify, (req, res) => {
+    let charging = req.body.charging;
+    charging = charging/100;
+    let token = req.cookies["auth"];
+    other.setCharging(charging, token).then(() => {
+        res.json(true);
+    }).catch((err) => {
+        res.json(false);
+    });
+});
+
 app.post("/set/estate", login.verifyAdmin, (req, res) => {
     let estate =  req.body.estate;
     let user = req.body.user;

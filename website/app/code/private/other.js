@@ -8,7 +8,7 @@ const pool = mariadb.createPool({
   connectionLimit: 5
 });
 
-//const root = "http://172.21.0.4:8081"
+//const root = "http://172.24.0.3:8081"
 //const root = "http://localhost:8081";
 const root = "https://api.projekt.giffeln.se";
 
@@ -81,6 +81,23 @@ module.exports = {
                 reject(false);
             });
         });
+    },
+    setCharging: async function(charging, token) {
+        return new Promise(async (resolve, reject) => {
+            console.log("charging: " + charging);
+            let url = root + "/set/estate/charging";
+            let method = "POST";
+            let data = {
+                "charging": charging,
+                "token": token
+            };
+            webrequest(method, url, data).then((resp) => {
+                resolve(true);
+            }).catch((err) => {
+                console.log(err);
+                reject(false);
+            });
+        });
     }
 }
 
@@ -112,7 +129,6 @@ async function getUsers() {
 
 function webrequest(method, url, data = {}) {
     return new Promise(async (resolve, reject) => {
-        console.log("getting http from: " + url)
         request({
             "url": url,
             "method": method,
