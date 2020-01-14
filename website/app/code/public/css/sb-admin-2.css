@@ -2832,7 +2832,22 @@ fieldset:disabled a.btn {
 input[type="submit"].btn-block,
 input[type="reset"].btn-block,
 input[type="button"].btn-block {
+  width: 50%;
+}
+
+.btn-block2 {
+  display: block;
   width: 100%;
+}
+
+.btn-block2 + .btn-block2 {
+  margin-top: 0.5rem;
+}
+
+input[type="submit"].btn-block2,
+input[type="reset"].btn-block2,
+input[type="button"].btn-block2 {
+  width: 50%;
 }
 
 .fade {
@@ -3568,6 +3583,10 @@ input[type="button"].btn-block {
   background-color: rgba(78, 115, 223, 0.5);
 }
 
+.width50 {
+  width: 50%;
+}
+
 .custom-select {
   display: inline-block;
   width: 100%;
@@ -3697,7 +3716,7 @@ input[type="button"].btn-block {
 }
 
 .custom-range {
-  width: 100%;
+  width: 50%;
   height: calc(1rem + 0.4rem);
   padding: 0;
   background-color: transparent;
@@ -4328,6 +4347,16 @@ input[type="button"].btn-block {
   background-clip: border-box;
   border: 1px solid #e3e6f0;
   border-radius: 0.35rem;
+}
+
+.card-tableCell30 {
+  display: table-cell;
+  width: 30%;
+}
+
+.card-tableCell50 {
+  display: table-cell;
+  width: 75%;
 }
 
 .card > hr {

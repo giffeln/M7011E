@@ -21,8 +21,19 @@ window.onload = function () {
         document.getElementById("username").innerHTML = "Login";
     }
 }
+var updateInterval;
 
-$('.collapse-item').click(function () {
+function startUserDashboardInterval() {
+    setupUserDashboard()
+    updateInterval = setInterval(function(){setupUserDashboard()}, 10000);
+}
+
+function clearUserDashboardInterval(){
+    clearInterval(updateInterval);
+}
+
+$('.table').click(function () {
+    clearUserDashboardInterval();
     if (sessionStorage.getItem("logged_in")) {
         var page = $(this).attr('href');
         $('.collapse-item').removeClass("active");
@@ -37,6 +48,19 @@ $('.collapse-item').click(function () {
         })
         return false;
     }
+})
+
+$('.setUserEstate').click(function () {
+    clearUserDashboardInterval();
+    var page = "admin_board.html";
+    $('.collapse-item').removeClass("active");
+    $(this).addClass("active")
+    $("#Main").load(page, function () {
+        showAdminSecrets();
+        setAdminUsersTable();
+        setAdminEstatesTable();
+    })
+    return false;
 })
 
 $('.logout').click(function () {
@@ -58,17 +82,19 @@ $('.logout').click(function () {
 
 $('.profile').click(function () {
     var page = $(this).attr('href');
+    $('.collapse-item').removeClass("active");
     $("#Main").load(page, function () {
-        getEstateId();
+        startUserDashboardInterval();
+        setSliders();
     })
     return false;
 })
 
-$('.admin').click(function () {
-    var page = "admin_board.html";
-    $("#Main").load(page, function () {
-        showAdminSecrets();
-    })
+$('.setEstateButton').unbind('click').bind('click', function () {
+    var userId = document.getElementById("userId").value;
+    var estateId = document.getElementById("estateId").value;
+    console.log(userId, estateId);
+    setUserEstate(userId, estateId);
     return false;
 });
 
@@ -84,7 +110,40 @@ function getDataToTable() {
     }
 
     data = fetchAsync(url).then((resp) => {
+        console.log(resp)
         writeDataToTable(resp);
+    });
+    return data;
+}
+
+function setAdminUsersTable(){
+    let urlUsers = "/api/get/users";
+    
+    async function fetchAsync(urlUsers) {
+        let response = await fetch(urlUsers);
+        let data = await response.json();
+        return data;
+    }
+
+    data = fetchAsync(urlUsers).then((resp) => {
+        console.log(resp);
+        writeDataToAdminTables(resp, "usersTable");
+    });
+    
+}
+
+function setAdminEstatesTable(){
+    let urlEstates = "/api/get/availableEstates";
+
+    async function fetchAsync(urlEstates) {
+        let response = await fetch(urlEstates);
+        let data = await response.json();
+        return data;
+    }
+
+    data = fetchAsync(urlEstates).then((resp) => {
+        console.log(resp)
+        writeDataToAdminTables(resp, "estateTable");
     });
     return data;
 }
@@ -105,14 +164,13 @@ function getData(dataToGet, estateId) {
 
     data = fetchAsync(url).then((resp) => {
         setCurrent(dataToGet, resp)
-        setNetConsumption();
         return resp;
     });
     return data;
 }
 
 
-function getEstateId() {
+function setupUserDashboard() {
     let url = "/api/get/estate";
     console.log(url)
 
@@ -123,7 +181,6 @@ function getEstateId() {
     }
 
     data = fetchAsync(url).then((resp) => {
-        console.log("ping");
         loadUserDashboard(resp.idEstates);
         document.getElementById("buffer").innerHTML = resp.batteryCharge;
 
@@ -133,7 +190,6 @@ function getEstateId() {
 
 function checkUserLogin() {
     let url = "https://api.projekt.giffeln.se/auth";
-    console.log(url)
 
     async function fetchAsync(url) {
         let response = await fetch(url);
@@ -143,7 +199,38 @@ function checkUserLogin() {
 
     data = fetchAsync(url).then((resp) => {
     });
-    console.log(data)
+    return data;
+}
+
+function setUserEstate(userId, estateId) {
+    let url = "/api/set/estate";
+
+    async function fetchAsync(api, load) {
+        let response = await fetch(api, load);
+        let data = await response.json();
+        return data;
+    }
+
+    let auth = {
+        "user": userId,
+        "estate": estateId,
+    };
+    let payload = {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(auth)
+    };
+    data = fetchAsync(url, payload).then((resp) => {
+        console.log(resp);
+        if (resp) {
+            console.log("Success");
+        } else {
+            console.log("Something went wrong");
+        }
+    });
     return data;
 }
 
@@ -170,8 +257,16 @@ function setTableBody(resp, table) {
 
 function writeDataToTable(resp) {
     var table = document.getElementById("dataTable");
+    table.innerHTML = "";
     setTableHeader(resp, table);
     setTableBody(resp, table);
+}
+
+function writeDataToAdminTables(resp, table) {
+    var tableToWrite = document.getElementById(table);
+    tableToWrite.innerHTML = "";
+    setTableHeader(resp, tableToWrite);
+    setTableBody(resp, tableToWrite);
 }
 
 function loadUserDashboard(estateId) {
@@ -179,12 +274,8 @@ function loadUserDashboard(estateId) {
     let consumption = getData("consumption", estateId);
     let production = getData("production");
     Promise.all([consumption, production]).then(function (values) {
-        document.getElementById("net").innerHTML = (values[0][values[0].length - 1].value.toFixed(2) - values[1][values[0].length - 1].value.toFixed(2));
+        document.getElementById("net").innerHTML = (values[0][values[0].length - 1].value - values[1][values[0].length - 1].value).toFixed(2);
     })
-}
-
-function setNetConsumption() {
-
 }
 
 function setCurrent(data, array) {
@@ -193,9 +284,20 @@ function setCurrent(data, array) {
 }
 
 function setAdminLinks(){
-    $('.admin').removeClass("hide");
+    $('.hideAdmin').removeClass("hide");
 }
 
 function showAdminSecrets(){
     $('#hidden_body').removeClass("hide");
+}
+
+function setSliders() {
+    document.getElementById("saveSlider").oninput = function () {
+        document.getElementById("saveSliderValue").innerHTML = this.value;
+        document.getElementById("sellValue").innerHTML = 100 - this.value;
+    }
+    document.getElementById("batterySlider").oninput = function () {
+        document.getElementById("batterySliderValue").innerHTML = this.value;
+        document.getElementById("buyValue").innerHTML = 100 - this.value;
+    }
 }

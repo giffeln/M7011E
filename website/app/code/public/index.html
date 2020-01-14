@@ -35,12 +35,6 @@
         </a>
       </li>
       
-      <li class="nav-item" id="admin">
-        <a class="nav-link text-center admin hide" id="admin" href="admin_board.html">
-          <span>Admin</span>
-        </a>
-      </li>
-
       <!-- Divider -->
       <hr class="sidebar-divider">
 
@@ -48,20 +42,36 @@
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item active">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
-          aria-controls="collapsePages">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="false"
+          aria-controls="collapsePages1">
           <i class="fas fa-fw fa-folder"></i>
           <span>Data tables</span>
         </a>
-        <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div id="collapsePages1" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a id="table1" class="collapse-item" href="tables/consumption.html">Consumption</a>
-            <a id="table2" class="collapse-item" href="tables/production.html">Production</a>
-            <a id="table3" class="collapse-item" href="tables/wind.html">Wind</a>
-            <a id="table4" class="collapse-item" href="tables/estates.html">Estates</a>
+            <a id="table1" class="collapse-item table" href="tables/consumption.html">Consumption</a>
+            <a id="table2" class="collapse-item table" href="tables/production.html">Production</a>
+            <a id="table3" class="collapse-item table" href="tables/wind.html">Wind</a>
+            <a id="table4" class="collapse-item table" href="tables/estates.html">Estates</a>
           </div>
         </div>
       </li>
+
+      <li class="nav-item active hide hideAdmin">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="false"
+          aria-controls="collapsePages2">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Admin</span>
+        </a>
+        <div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a id="table1" class="collapse-item setUserEstate" href="">Set estate</a>
+            <a id="table2" class="collapse-item admin2" href="">Status</a>
+            <a id="table3" class="collapse-item admin3" href="">Online Users</a>
+          </div>
+        </div>  
+      </li>
+
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -151,7 +161,7 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

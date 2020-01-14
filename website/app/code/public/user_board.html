@@ -1,8 +1,48 @@
-<div class="text-left">
-    <div class="text-info" >Current windspeed is: <div id="wind" class="text-warning"> </div> </div>
-    <div class="text-info" >Current energy production is: <div id="production" class="text-warning"></div></div> 
-    <div class="text-info" >Current energy consumption is: <div id="consumption" class="text-warning"></div></div>
-    <div class="text-info">Net consumption: <div id="net" class="text-warning"></div></div>
-    <div class="text-info">Energy in buffer: <div id="buffer" class="text-warning"></div></div>
-    <div class="text-info">Energy marketprice: <div id="marketPrice" class="text-warning"></div></div>
+<div class="card shadow mb-4 card-tableCell10">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Home information</h6>
+    </div>
+    <div class="card-body">
+        <div class="text-info">Current windspeed is: <div id="wind" class="text-warning"> </div>
+        </div>
+        <div class="text-info">Current energy production is: <div id="production" class="text-warning"></div>
+        </div>
+        <div class="text-info">Current energy consumption is: <div id="consumption" class="text-warning"></div>
+        </div>
+        <div class="text-info">Net consumption: <div id="net" class="text-warning"></div>
+        </div>
+        <div class="text-info">Energy in buffer: <div id="buffer" class="text-warning"></div>
+        </div>
+        <div class="text-info">Energy marketprice: <div id="marketPrice" class="text-warning"></div>
+        </div>
+    </div>
+</div>
+<div class="card shadow mb-4 card-tableCell10">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Settings</h6>
+    </div>
+    <div class="card-body">
+        <div class="text">In case of overproduction i want to save: </div>
+        <div class="slidecontainer">
+            <input type="range" min="0" max="100" value="0" class="custom-range" id="saveSlider" step="5">
+        </div>
+        <div id="saveSliderValue"></div>
+        <div class="text">Amount sold to market if overproduction: </div>
+        <div id="sellValue">0</div>
+        <div class="text">In case of underproduction i want to take from battery: </div>
+        <div class="slidecontainer">
+            <input type="range" min="0" max="100" value="0" class="custom-range" id="batterySlider" step="5">
+        </div>
+        <div id="batterySliderValue"></div>
+        <div class="text">Amount bought from market in case of underproduction: </div>
+        <div id="buyValue">0</div>
+        <hr>
+        <center>
+            <input type="button" class="btn btn-primary btn-user btn-block2" id="setUserEstate"
+            value="Reset" />
+        <input type="button" class="btn btn-primary btn-user btn-block2" id="setUserEstate"
+            value="Submit" />
+        </center>
+        
+    </div>
 </div>
