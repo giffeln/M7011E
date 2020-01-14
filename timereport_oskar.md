@@ -21,4 +21,5 @@
 | 2019-12-19 | 3| Tables up for each data type |
 | 2019-12-19 | 3| Dynamic swapping between pagin |
 | 2020-01-08 | 10| User dashboard is up, admin on its way |
-| 2020-01-11 | 4| Some edits if someone is not logged in etc |
+| 2020-01-11 | 8| Some edits if someone is not logged in etc |
+| 2020-01-13 | 8| Prosumer site is done, manager site in progress |
