@@ -21,6 +21,7 @@ window.onload = function () {
         document.getElementById("username").innerHTML = "Login";
     }
 }
+
 var updateInterval;
 
 function startUserDashboardInterval() {
@@ -52,7 +53,7 @@ $('.table').click(function () {
 
 $('.setUserEstate').click(function () {
     clearUserDashboardInterval();
-    var page = "admin_board.html";
+    var page = "set_user_estate.html";
     $('.collapse-item').removeClass("active");
     $(this).addClass("active")
     $("#Main").load(page, function () {
@@ -62,6 +63,31 @@ $('.setUserEstate').click(function () {
     })
     return false;
 })
+
+$('.adminDashboard').click(function () {
+    clearUserDashboardInterval();
+    var page = "admin_dashboard.html";
+    $('.collapse-item').removeClass("active");
+    $(this).addClass("active")
+    $("#Main").load(page, function () {
+        showAdminSecrets();
+
+    })
+    return false;
+})
+
+$('.adminUsers').click(function () {
+    clearUserDashboardInterval();
+    var page = "see_users.html";
+    $('.collapse-item').removeClass("active");
+    $(this).addClass("active")
+    $("#Main").load(page, function () {
+        showAdminSecrets();
+        
+    })
+    return false;
+})
+
 
 $('.logout').click(function () {
     let url = "/api/logout";
@@ -84,9 +110,21 @@ $('.profile').click(function () {
     var page = $(this).attr('href');
     $('.collapse-item').removeClass("active");
     $("#Main").load(page, function () {
-        startUserDashboardInterval();
+        //startUserDashboardInterval();
         setSliders();
     })
+    return false;
+})
+
+$('.setCharge').click(function () {
+    setUserCharge();
+    console.log("submit fired");
+    return false;
+})
+
+$('.resetSliders').click(function () {
+    resetSliders();
+    console.log("reset fired")
     return false;
 })
 
@@ -186,6 +224,33 @@ function setupUserDashboard() {
 
     });
     return true;
+}
+
+function setUserCharge(){
+    var amount = parseInt(document.getElementById("saveSlider").value);
+    let url = "/api/set/charging";
+
+    async function fetchAsync(api, load) {
+        let response = await fetch(api, load);
+        let data = await response.json();
+        return data;
+    }
+
+    let auth = {
+        "charging": amount,
+    };
+    let payload = {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(auth)
+    };
+    data = fetchAsync(url, payload).then((resp) => {
+        console.log(resp);
+    });
+    return data;
 }
 
 function checkUserLogin() {
@@ -300,4 +365,13 @@ function setSliders() {
         document.getElementById("batterySliderValue").innerHTML = this.value;
         document.getElementById("buyValue").innerHTML = 100 - this.value;
     }
+}
+
+function resetSliders(){
+    document.getElementById("saveSlider").value = 0;
+    document.getElementById("saveSliderValue").innerHTML = 0;
+    document.getElementById("sellValue").innerHTML = 100;
+    document.getElementById("batterySlider").value = 0;
+    document.getElementById("batterySliderValue").innerHTML = 0;
+    document.getElementById("buyValue").innerHTML = 100;
 }

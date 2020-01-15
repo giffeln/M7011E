@@ -1,0 +1,69 @@
+<link href="css/sb-admin-2.min.css" rel="stylesheet">
+</link>
+<div class="hide" id="hidden_body">
+    <h1 class="h3 mb-2 text-gray-800" id="headerName">Powerplant status and settings</h1>
+    <p class="mb-4"></p>
+
+    <div class="card shadow mb-4 card-tableCell10">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Powerplant information</h6>
+        </div>
+        <div class="card-body">
+            <div class="text-info">Powerplant Status: <div id="status" class="text-warning"> </div>
+            </div>
+            <div class="text-info">Current energy production is: <div id="production" class="text-warning"></div>
+            </div>
+            <div class="text-info">Current energy consumption is: <div id="consumption" class="text-warning"></div>
+            </div>
+            <div class="text-info">Energy in buffer: <div id="buffer" class="text-warning"></div>
+            </div>
+            <div class="text-info">Energy marketprice: <div id="marketPrice" class="text-warning"></div>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow mb-4 card-tableCell10">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Settings</h6>
+        </div>
+        <div class="card-body">
+            <div class="text">Set plant energy production: </div>
+            <div class="slidecontainer">
+                <input type="range" min="0" max="200000" value="0" class="custom-range" id="saveSlider" step="100">
+            </div>
+            <div id="saveSliderValue">0</div>
+            <center>
+                <input type="button" class="btn btn-primary btn-user btn-block2 setCharge" id="setCharge"
+                    value="Submit" />
+            </center>
+            <hr>
+            <div class="text">Amount saved to the battery: </div>
+            <div class="slidecontainer">
+                <input type="range" min="0" max="100" value="0" class="custom-range" id="batterySlider" step="5">
+            </div>
+            <div id="batterySliderValue">0</div>
+            <div class="text">Amount sold to the market: </div>
+            <div id="buyValue">0</div>
+            <center>
+                <input type="button" class="btn btn-primary btn-user btn-block2 setCharge" id="setCharge"
+                    value="Submit" />
+            </center>
+            <hr>
+            <div class="text">Set energy market price: </div>
+            <div class="slidecontainer">
+                <input type="range" min="0" max="200" value="0" class="custom-range" id="saveSlider" step="5">
+            </div>
+            <div id="saveSliderValue">0</div>
+            <center>
+                <input type="button" class="btn btn-primary btn-user btn-block2 setCharge" id="setCharge"
+                    value="Submit" />
+            </center>
+            <hr>
+            <center>
+                <input type="button" class="btn btn-primary btn-user btn-block2 resetSliders" id="resetCharge"
+                    value="Reset" />
+            </center>
+            <hr>
+        </div>
+    </div>
+</div>
+<script src="js/admin.js"></script>
