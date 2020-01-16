@@ -28,42 +28,43 @@
         <div class="card-body">
             <div class="text">Set plant energy production: </div>
             <div class="slidecontainer">
-                <input type="range" min="0" max="200000" value="0" class="custom-range" id="saveSlider" step="100">
+                <input type="range" min="0" max="200000" value="0" class="custom-range" id="plantProdSlider" step="100">
             </div>
             <div id="saveSliderValue">0</div>
             <center>
-                <input type="button" class="btn btn-primary btn-user btn-block2 setCharge" id="setCharge"
-                    value="Submit" />
+                <input type="button" class="btn btn-primary btn-user btn-block2 setProduction" onclick="setProduction()"
+                    id="setProduction" value="Submit" />
             </center>
             <hr>
             <div class="text">Amount saved to the battery: </div>
             <div class="slidecontainer">
-                <input type="range" min="0" max="100" value="0" class="custom-range" id="batterySlider" step="5">
+                <input type="range" min="0" max="100" value="0" class="custom-range" id="plantBatterySlider" step="5">
             </div>
             <div id="batterySliderValue">0</div>
             <div class="text">Amount sold to the market: </div>
-            <div id="buyValue">0</div>
+            <div id="soldValue">0</div>
             <center>
-                <input type="button" class="btn btn-primary btn-user btn-block2 setCharge" id="setCharge"
-                    value="Submit" />
+                <input type="button" class="btn btn-primary btn-user btn-block2 setPlantBattery"
+                    onclick="setPlantBattery()" id="setPlantBattery" value="Submit" />
             </center>
             <hr>
             <div class="text">Set energy market price: </div>
             <div class="slidecontainer">
-                <input type="range" min="0" max="200" value="0" class="custom-range" id="saveSlider" step="5">
+                <input type="range" min="0" max="200" value="0" class="custom-range" id="priceSlider" step="5">
             </div>
-            <div id="saveSliderValue">0</div>
+            <div id="marketPice">0</div>
             <center>
-                <input type="button" class="btn btn-primary btn-user btn-block2 setCharge" id="setCharge"
-                    value="Submit" />
+                <input type="button" class="btn btn-primary btn-user btn-block2 setPrice" id="setPrice"
+                    onclick="setPrice()" value="Submit" />
             </center>
             <hr>
             <center>
-                <input type="button" class="btn btn-primary btn-user btn-block2 resetSliders" id="resetCharge"
-                    value="Reset" />
+                <input type="button" class="btn btn-primary btn-user btn-block2 resetPlantSliders"
+                    onclick="resetAdminSliders()" id="resetPlantSliders" value="Reset" />
             </center>
             <hr>
         </div>
     </div>
 </div>
 <script src="js/admin.js"></script>
+<script src="js/admin_dashboard.js"></script>

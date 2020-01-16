@@ -23,4 +23,6 @@
 | 2020-01-08 | 10| User dashboard is up, admin on its way |
 | 2020-01-11 | 8| Some edits if someone is not logged in etc |
 | 2020-01-13 | 8| Prosumer site is done, manager site in progress |
-| 2020-01-13 | 8| Last connections to prosumer site, manager site skeleton done, needs connections |
+| 2020-01-14 | 8| Last connections to prosumer site, manager site skeleton done, needs connections |
+| 2020-01-16 | 10| Site is complete, needs some connections to backend still |
+

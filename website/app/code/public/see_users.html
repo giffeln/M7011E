@@ -26,57 +26,35 @@
                 </div>
                 <div class="card-body">
                     <form class="user">
-                        <div class="text">Set user password</div>
+                        <div class="text">See users system</div>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-user" id="userId"
-                            aria-describedby="User id" placeholder="User id" required>
+                            <input type="text" class="form-control form-control-user" id="checkSystemUserId"
+                                aria-describedby="User id" placeholder="User id" required>
                         </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control form-control-user" id="password"
-                                aria-describedby="Password" placeholder="Password" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control form-control-user" id="passwordControl"
-                            aria-describedby="Repeat Password" placeholder="Password control" required>
-                        </div>
-                        <input type="button" class="btn btn-primary btn-user btn-block setUserPasswordButton"
-                            id="setUserPassword" value="Set password" />
+                        <input type="button" class="btn btn-primary btn-user btn-block seeUserSystemButton"
+                            onclick="lookupUser()" id="seeUserSystem" value="Check User System" />
                         <hr>
                     </form>
-                    <div class="text">Delete user</div>
-                    <div class="form-group">
-                        <input type="text" class="form-control form-control-user" id="userId"
-                        aria-describedby="User id" placeholder="User id" required>
-                    </div>
-                    <input type="button" class="btn btn-primary btn-user btn-block deleteUserButton"
-                            id="deleteUser" value="Delete User" />
-                    <hr>
-                    <div class="text">See users system</div>
-                    <div class="form-group">
-                        <input type="text" class="form-control form-control-user" id="userId"
-                        aria-describedby="User id" placeholder="User id" required>
-                    </div>
-                    <input type="button" class="btn btn-primary btn-user btn-block seeUserSystemButton"
-                            id="seeUserSystem" value="Check User System" />
-                    <hr>
-                    <div class="text">Block user: </div>
-                    <div class="text">Time: </div>
-                    <div class="slidecontainer">
-                        <input type="range" min="10" max="100" value="10" class="custom-range" id="blockTimeSlider" step="5">
-                    </div>
-                    <div id="saveSliderValue">10</div>
-                    <div class="form-group">
-                        <input type="text" class="form-control form-control-user" id="userId"
-                        aria-describedby="User id" placeholder="User id" required>
-                    </div>
-                    <center>
-                        <input type="button" class="btn btn-primary btn-user btn-block2 setCharge" id="setCharge"
-                            value="Submit" />
-                    </center>
-                    <hr>
+                    <form class="user">
+                        <div class="text">Block user: </div>
+                        <div class="text">Time: </div>
+                        <div class="slidecontainer">
+                            <input type="range" min="10" max="100" value="10" class="custom-range" id="blockSlider"
+                                step="5">
+                        </div>
+                        <div id="blockSliderValue">10</div>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-user" id="blockUserId"
+                                aria-describedby="User id" placeholder="User id" required>
+                        </div>
+                        <input type="button" class="btn btn-primary btn-user btn-block setCharge"
+                            onclick="blockUser()" id="setCharge" value="Submit" />
+                        <hr>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script src="js/admin.js"></script>
+<script src="js/see_users.js"></script>
