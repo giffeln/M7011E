@@ -40,7 +40,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/set', set);
+app.use('/set', verifyUser, set);
 
 app.get('/', (req, res) => {
   //url params
@@ -204,19 +204,10 @@ function verifyAdmin(req, res, next) {
 }
 
 function verifyUser(req, res, next) {
-    console.log(req.body);
-    const token = req.body.auth;
-    if(!token) {
-        return res.status(401).send({auth: false});
-    }
-    try {
-        const verified = jwt.verify(token, secret);
-        req.user = verified;
-        console.log(req.user);
+    if(req.hasOwnProperty("user")) {
         next();
-    } catch(err) {
-        console.log("Invalid token")
-        res.status(400).send({"auth": false});
+    } else {
+        res.json(false);
     }
 }
 

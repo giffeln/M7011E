@@ -34,14 +34,33 @@ app.post("/estate/charging", (req, res) => {
     });
 });
 
+app.post("/estate/reset", (req, res) => {
+    if(req.user.admin == 1) {
+        let estate = req.body.estate;
+        let sql = "UPDATE Estates SET batterySize = 0, batteryCharge = 0, batteryCharging = 0 WHERE idEstates = " + estate;
+        query(sql).then(() => {
+            res.json(true);
+        }).catch((err) => {
+            console.log(err);
+            res.json(false);
+        });
+    } else {
+        res.json(false);
+    }
+});
+
 app.post("/powerplant/", (req, res) => {
-    let value = req.body.value;
-    let sql = 'INSERT INTO Powerplant (value) VALUES (' + value + ')';
-    query(sql).then(() => {
-        res.json({"valueSet": true});
-    }).catch((err) => {
-        res.json({"valueSet": false});
-    });
+    if(req.user.admin == 1) {
+        let value = req.body.value;
+        let sql = 'INSERT INTO Powerplant (value) VALUES (' + value + ')';
+        query(sql).then(() => {
+            res.json(true);
+        }).catch((err) => {
+            res.json(false);
+        });
+    } else {
+        res.json(false);
+    }
 });
 
 module.exports = app;
