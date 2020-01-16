@@ -98,6 +98,24 @@ module.exports = {
                 reject(false);
             });
         });
+    },
+    webrequest: async function(method, url, data = {}) {
+        return new Promise(async (resolve, reject) => {
+            request({
+                "url": url,
+                "method": method,
+                "json": data
+            }, function(err, resp){
+                if(err) {reject(err);}
+                else {
+                    if(resp.body.length == 1) {
+                        resolve(resp.body[0]);
+                    } else {
+                        resolve(resp.body);
+                    }
+                }
+            });
+        });
     }
 }
 

@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const mariadb = require('mariadb');
 const jwt = require('jsonwebtoken');
+const other = require("./other");
 const pool = mariadb.createPool({
   host: "web_db",
   user: "node",
@@ -10,6 +11,7 @@ const pool = mariadb.createPool({
 });
 
 const secret = "D4n Humphr3y i5 G0s5ip 6ir1";
+const root = "https://api.projekt.giffeln.se";
 
 module.exports = {
     login: async function(username, password) {
@@ -100,6 +102,46 @@ module.exports = {
             console.log("Invalid token")
             res.status(400).send();
         }
+    },
+    changePassword: async function(username, password) {
+        return new Promise(async (resolve, reject) => {
+            const salt = await bcrypt.genSalt();
+            const hashPass = await bcrypt.hash(password, salt);
+            let sql = "UPDATE Users SET password = '" + hashPass + "' WHERE username = '" + username + "'";
+            query(sql).then(() => {
+                resolve(true);
+            }).catch((err) => {
+                console.log(err);
+                reject(false);
+            });
+        });
+    },
+    removeUser: async function(username, token) {
+        return new Promise(async (resolve, reject) => {
+            let sql = "SELECT * FROM Users WHERE username = '" + username + "'";
+            console.log(sql);
+            query(sql).then((table) => {
+                let estate = table[0].estate;
+                let url = root + "/set/estate/reset";
+                other.webrequest("POST", url, {"token": token, "estate": estate}).then((resp) => {
+                    if(resp == true) {
+                        sql = "DELETE FROM Users WHERE username = '" + username + "'";
+                        query(sql).then(() => {
+                            resolve(true);
+                        }).catch((err) => {
+                            console.log(err);
+                            reject(false);
+                        });
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                    reject(false);
+                });
+            }).catch((err) => {
+                console.log(err);
+                reject(false);
+            });
+        });
     }
 }
 

@@ -123,6 +123,34 @@ app.get("/get/users", login.verifyAdmin, (req, res) => {
 
 app.get("/get/username", login.verify, (req, res) => {
     res.json({"username": req.user.username});
-})
+});
+
+app.post("/removeUser", login.verifyAdmin, (req, res) => {
+    console.log(req.body.username);
+    let username = req.body.username;
+    let token = req.cookies["auth"];
+    login.removeUser(username, token).then(() => {
+        res.json(true);
+    }).catch((err) => {
+        console.log(err);
+        res.json(false);
+    });
+});
+
+app.post("/changePassword", login.verify, (req, res) => {
+    let username;
+    if(req.user.admin == 1 && req.body.hasOwnProperty("username")) {
+        username = req.body.username;
+    } else {
+        username = req.user.username;
+    }
+    let password = req.body.password;
+    login.changePassword(username, password).then (() => {
+        res.json(true);
+    }).catch((err) => {
+        console.log(err);
+        res.json(false);
+    });
+});
 
 module.exports = app;
