@@ -25,4 +25,6 @@
 | 2020-01-13 | 8| Prosumer site is done, manager site in progress |
 | 2020-01-14 | 8| Last connections to prosumer site, manager site skeleton done, needs connections |
 | 2020-01-16 | 10| Site is complete, needs some connections to backend still |
+| 2020-01-17 | 10| Last fixes and some tuning|
+| 2020-01-18 | 10| Bug fixes and some spoofing of missing things |
 
