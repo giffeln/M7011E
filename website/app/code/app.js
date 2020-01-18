@@ -1,6 +1,7 @@
 const routes = require('./private/routes');
 const express = require("express");
 const cookieParser = require('cookie-parser');
+const other = require("./private/other")
 
 const app = express();
 const port = 8080;
@@ -12,7 +13,7 @@ app.use(express.static("public"));
 app.use("/api", apiHeader, routes);
 
 app.listen(port, function() {
-    /*other.startup()*/
+    other.startup();
     console.log("backend running at: " + port);
 });
 
