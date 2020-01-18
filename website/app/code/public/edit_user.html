@@ -46,7 +46,36 @@
                                 placeholder="Estate id" required>
                         </div>
                         <input type="button" class="btn btn-primary btn-user btn-block setEstateButton"
-                            id="setUserEstate" value="Set Estate" />
+                            id="setEstateButton" onclick="setUserEstate()" value="Set Estate" />
+                        <hr>
+                    </form>
+
+                    <form class="user">
+                        <div class="text">Set user password</div>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-user" id="changePassUserId"
+                                aria-describedby="User id" placeholder="Username" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control form-control-user" id="password"
+                                aria-describedby="Password" placeholder="Password" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control form-control-user" id="passwordControl"
+                                aria-describedby="Repeat Password" placeholder="Password control" required>
+                        </div>
+                        <input type="button" class="btn btn-primary btn-user btn-block setUserPasswordButton"
+                            onclick="updateUserPassword()" id="setUserPassword" value="Set password" />
+                        <hr>
+                    </form>
+                    <form class="user">
+                        <div class="text">Delete user</div>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-user" id="deleteUserId"
+                                aria-describedby="User id" placeholder="Username" required>
+                        </div>
+                        <input type="button" class="btn btn-primary btn-user btn-block deleteUserButton"
+                            onclick="deleteUser()" id="deleteButtonUser" value="Delete User" />
                         <hr>
                     </form>
                 </div>
@@ -55,3 +84,4 @@
     </div>
 </div>
 <script src="js/admin.js"></script>
+<script src="js/edit_user.js"></script>
