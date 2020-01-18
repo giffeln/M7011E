@@ -10,11 +10,10 @@ function register() {
     username = document.getElementById("Username").value;
     password = document.getElementById("Password").value;
     passwordCheck = document.getElementById("RepeatPassword").value;
-    admin = document.getElementById("adminCheck").checked;
     let auth = {
         "anv": username,
         "pass": password,
-        "admin": admin
+        "admin": 0
     };
     let payload = {
         method: 'post',
@@ -28,10 +27,9 @@ function register() {
         fetchAsync(url, payload).then((resp) => {
             console.log(resp);
             if (resp) {
-                console.log("logged in");
                 window.location.pathname = ''
             } else {
-                console.log("not logged in");
+                alert("Passwords must match");
             }
         });
     } else {

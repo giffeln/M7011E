@@ -28,10 +28,9 @@ function login() {
     };
     fetchAsync(url, payload).then((resp) => {
         if (resp) {
-            console.log("logged in");
             setSession();
         } else {
-            console.log("not logged in");
+            alert("Username and password does not match.")
         }
     });
 }
@@ -46,7 +45,7 @@ function checkLogin() {
         return data;
     }
 
-    data = fetchAsync(url).then((resp) => {
+    var data = fetchAsync(url).then((resp) => {
         console.log(resp);
         if (resp === true) {
             window.location.pathname = ''
@@ -57,7 +56,7 @@ function checkLogin() {
 
 function setSession(){
     sessionStorage.setItem("logged_in", true);
-    let url = "http://localhost:8080/api/admin";
+    let url = "/api/admin";
     async function fetchAsync(url) {
         let response = await fetch(url);
         let data = await response.json();
