@@ -43,7 +43,7 @@
                             <input type="text" class="form-control form-control-user" id="estateId"
                                 placeholder="Estate id" required>
                         </div>
-                        <input type="button" c            <!-- Page Heading -->lass="btn btn-primary btn-user btn-block setEstateButton"
+                        <input type="button" class="btn btn-primary btn-user btn-block setEstateButton"
                             id="setEstateButton" onclick="setUserEstate()" value="Set Estate" />
                         <hr>
                     </form>
@@ -74,6 +74,16 @@
                         </div>
                         <input type="button" class="btn btn-primary btn-user btn-block deleteUserButton"
                             onclick="deleteUser()" id="deleteButtonUser" value="Delete User" />
+                        <hr>
+                    </form>
+                    <form class="user">
+                        <div class="text">Add admin status</div>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-user" id="setUserAdmin"
+                                aria-describedby="User id" placeholder="User id" required>
+                        </div>
+                        <input type="button" class="btn btn-primary btn-user btn-block"
+                            onclick="setUserAdmin()" id="setAdminButton" value="Add Admin" />
                         <hr>
                     </form>
                 </div>

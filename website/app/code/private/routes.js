@@ -104,6 +104,19 @@ app.get("/get/estate", login.verify, (req, res) => {
     }
 });
 
+app.get("/get/userEstate", login.verifyAdmin, (req, res) => {
+    let estate = req.body.user;
+    if(!estate) { res.json(false); }
+    else {
+        other.getEstate(estate).then((estateData) => {
+            res.json(estateData);
+        }).catch((err) => {
+            console.log(err);
+            res.json(false);
+        })
+    }
+});
+
 app.get("/get/availableEstates", login.verifyAdmin, (req, res) => {
     other.getAvailableEstates().then((estates) => {
         if(estates) {

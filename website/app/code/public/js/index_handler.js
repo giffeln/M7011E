@@ -1,6 +1,6 @@
 window.onload = function () {
     if (sessionStorage.getItem("logged_in")) {
-        let url = "http://localhost:8080/api/get/username";
+        let url = "/api/get/username";
         async function fetchAsync(url) {
             let response = await fetch(url);
             let data = await response.json();
@@ -12,7 +12,7 @@ window.onload = function () {
             document.getElementById("userDropdown").setAttribute("data-toggle", "dropdown");
         });
         if (this.sessionStorage.getItem("admin") === 'true') {
-            setAdminLinks();
+            $('.hideAdmin').removeClass("hide");
         }
     } else {
         let dropdown = document.getElementById("userDropdown");
@@ -49,7 +49,7 @@ $('.setUserEstate').click(function () {
     $(this).addClass("active")
     $('#Main').empty();
     $("#Main").load(page, function () {
-        showAdminSecrets();
+        $('#hidden_body').removeClass("hide");
         setAdminUsersTable();
         setAdminEstatesTable();
     })
@@ -63,7 +63,7 @@ $('.adminDashboard').click(function () {
     $(this).addClass("active")
     $('#Main').empty();
     $("#Main").load(page, function () {
-        showAdminSecrets();
+        $('#hidden_body').removeClass("hide");
         setupAdminDashboard();
         setAdminSliders();
     })
@@ -77,7 +77,7 @@ $('.adminUsers').click(function () {
     $(this).addClass("active")
     $('#Main').empty();
     $("#Main").load(page, function () {
-        showAdminSecrets();
+        $('#hidden_body').removeClass("hide");
         setBlockSlider();
     })
     return false;
@@ -121,12 +121,4 @@ function startUserDashboardInterval() {
 
 function clearUserDashboardInterval() {
     clearInterval(updateInterval);
-}
-
-function setAdminLinks() {
-    $('.hideAdmin').removeClass("hide");
-}
-
-function showAdminSecrets() {
-    $('#hidden_body').removeClass("hide");
 }

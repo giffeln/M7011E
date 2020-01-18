@@ -24,9 +24,7 @@ function setUserEstate(userId, estateId) {
     data = fetchAsync(url, payload).then((resp) => {
         console.log(resp);
         if (resp) {
-            console.log("Success");
         } else {
-            console.log("Something went wrong");
         }
     });
     return data;
@@ -62,7 +60,6 @@ function setTableBody(resp, table) {
 function setAdminUsersTable() {
     let urlUsers = "/api/get/users";
     data = fetchAsync(urlUsers).then((resp) => {
-        console.log(resp);
         writeDataToAdminTables(resp, "usersTable");
     });
 
@@ -71,7 +68,6 @@ function setAdminUsersTable() {
 function setAdminEstatesTable() {
     let urlEstates = "/api/get/availableEstates";
     data = fetchAsync(urlEstates).then((resp) => {
-        console.log(resp)
         writeDataToAdminTables(resp, "estateTable");
     });
     return data;
@@ -96,8 +92,6 @@ function updateUserPassword() {
             body: JSON.stringify(auth)
         };
         data = fetchAsync(url, payload).then((resp) => {
-            console.log(resp);
-            console.log(username, pass);  
         });
         return data;
     } else {
@@ -120,7 +114,25 @@ function deleteUser() {
         body: JSON.stringify(auth)
     };
     data = fetchAsync(url, payload).then((resp) => {
-        console.log(resp);
+    });
+    return data;
+}
+
+function setUserAdmin(){
+    var username = document.getElementById("setUserAdmin").value;
+    let url = "/api/set/admin";
+    let auth = {
+        "user": username
+    };
+    let payload = {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(auth)
+    };
+    data = fetchAsync(url, payload).then((resp) => {
     });
     return data;
 }

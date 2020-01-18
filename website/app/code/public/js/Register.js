@@ -10,10 +10,11 @@ function register() {
     username = document.getElementById("Username").value;
     password = document.getElementById("Password").value;
     passwordCheck = document.getElementById("RepeatPassword").value;
+    console.log(admin);
     let auth = {
         "anv": username,
         "pass": password,
-        "admin": 0
+        "admin": false
     };
     let payload = {
         method: 'post',
