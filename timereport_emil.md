@@ -33,3 +33,6 @@
 | 2020-01-08 | 6 | Adding and changing whatever oskar needed and a bunch of small corrections |
 | 2020-01-11 | 5 | Adding functions for Oskar, making the batteries charge and github maintenance |
 | 2020-01-12 | 6 | Changing Wind sim |
+| 2020-01-14 | 3 | More functions for the frontend |
+| 2020-01-16 | 3 | Functions for frontend and sim tweaking |
+| 2020-01-17 | 2 | Sim tweaking |

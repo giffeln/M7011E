@@ -116,6 +116,28 @@ module.exports = {
                 }
             });
         });
+    },
+    getPowerplant: async function() {
+        let estates = await getEstates();
+        let powerplant;
+        estates.forEach(estate => {
+            if(estate.size == 0) {
+                powerplant = estate;
+                break;
+            }
+        });
+        return powerplant;
+    },
+    setAdmin: async function(user) {
+        return new Promise(async (resolve, reject) => {
+            let sql = "UPDATE Users SET admin = 1 WHERE idUsers = " + user;
+            query(sql).then(() => {
+                resolve(true);
+            }).catch(() => {
+                reject(false);
+            });
+        });
+        
     }
 }
 
