@@ -44,9 +44,9 @@ app.post("/register", async (req, res) => {
     console.log("tried to register " + user);
     if(req.body.hasOwnProperty("estate")) {
         estate = req.body.estate;
-        if(req.body.hasOwnProperty("admin")) { admin = true; }
+        if(req.body.hasOwnProperty("admin")) { admin = req.body.admin; }
     } else {
-        if(req.body.hasOwnProperty("admin")) { admin = true; }
+        if(req.body.hasOwnProperty("admin")) { admin = req.body.admin; }
     }
     login.register(user, pass, admin, estate).then((resp) => {
         if(resp) {
