@@ -12,6 +12,7 @@ app.use(express.static("public"));
 app.use("/api", apiHeader, routes);
 
 app.listen(port, function() {
+    /*other.startup()*/
     console.log("backend running at: " + port);
 });
 

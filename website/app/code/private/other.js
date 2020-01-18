@@ -138,7 +138,7 @@ module.exports = {
                 reject(false);
             });
         });
-    },
+    }/*,
     startup: async function() {
         return new Promise(async (resolve, reject) => {
             let sql = "SELECT * FROM Users";
@@ -160,7 +160,7 @@ module.exports = {
                 reject(false);
             });
         });
-    }
+    }*/
 }
 
 async function getEstates() {
