@@ -135,12 +135,15 @@ app.get("/get/username", login.verify, (req, res) => {
 });
 
 app.get("/get/powerplant", login.verifyAdmin, (req, res) => {
-    let powerplant = await other.getPowerplant();
-    if(powerplant) {
-        res.json(powerplant);
-    } else {
+    other.getPowerplant().then((powerplant) => {
+        if(powerplant) {
+            res.json(powerplant);
+        } else {
+            res.json(false);
+        }
+    }).catch((err) => {
         res.json(false);
-    }
+    })
 });
 
 app.post("/removeUser", login.verifyAdmin, (req, res) => {

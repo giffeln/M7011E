@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const mariadb = require('mariadb');
 const request = require('request');
 const pool = mariadb.createPool({
@@ -137,7 +138,28 @@ module.exports = {
                 reject(false);
             });
         });
-        
+    },
+    startup: async function() {
+        return new Promise(async (resolve, reject) => {
+            let sql = "SELECT * FROM Users";
+            query(sql).then((table) => {
+                if(table.length == 0) {
+                    let password = "admin";
+                    const salt = await bcrypt.genSalt();
+                    const hashPass = await bcrypt.hash(password, salt);
+                    let sql = "INSERT INTO Users (username, password, admin) VALUES ('admin', '" + hashPass + "', 1)";
+                    query(sql).then(() => {
+                        resolve(true);
+                    }).catch((err) => {
+                        console.log(err);
+                        reject(false);
+                    });
+               } else resolve(true);
+            }).catch((err) => {
+                console.log(err);
+                reject(false);
+            });
+        });
     }
 }
 
