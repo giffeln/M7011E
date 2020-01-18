@@ -82,6 +82,15 @@ app.post("/set/estate", login.verifyAdmin, (req, res) => {
     });
 });
 
+app.post("/set/admin", login.verifyAdmin, (req, res) => {
+    let user = req.body.user;
+    other.setAdmin(user).then(() => {
+        res.json(true);
+    }).catch(() => {
+        res.json(false);
+    });
+});
+
 app.get("/get/estate", login.verify, (req, res) => {
     let estate = req.user.estate;
     if(!estate) { res.json(false); }
@@ -123,6 +132,15 @@ app.get("/get/users", login.verifyAdmin, (req, res) => {
 
 app.get("/get/username", login.verify, (req, res) => {
     res.json({"username": req.user.username});
+});
+
+app.get("/get/powerplant", login.verifyAdmin, (req, res) => {
+    let powerplant = await other.getPowerplant();
+    if(powerplant) {
+        res.json(powerplant);
+    } else {
+        res.json(false);
+    }
 });
 
 app.post("/removeUser", login.verifyAdmin, (req, res) => {
