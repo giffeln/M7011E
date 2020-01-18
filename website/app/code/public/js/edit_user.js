@@ -7,7 +7,6 @@ async function fetchAsync(api, load) {
 function setUserEstate(userId, estateId) {
     var userId = document.getElementById("userId").value;
     var estateId = document.getElementById("estateId").value;
-    console.log(userId, estateId);
     let url = "/api/set/estate";
     let auth = {
         "user": userId,
@@ -22,9 +21,10 @@ function setUserEstate(userId, estateId) {
         body: JSON.stringify(auth)
     };
     data = fetchAsync(url, payload).then((resp) => {
-        console.log(resp);
         if (resp) {
-        } else {
+            alert("Success!")
+        } else {    
+            alert("Error, please try again!")
         }
     });
     return data;
@@ -93,6 +93,7 @@ function updateUserPassword() {
         };
         data = fetchAsync(url, payload).then((resp) => {
         });
+        alert("Success!")
         return data;
     } else {
         alert("Passwords must match")
@@ -114,11 +115,16 @@ function deleteUser() {
         body: JSON.stringify(auth)
     };
     data = fetchAsync(url, payload).then((resp) => {
+        if (resp) {
+            alert("Success!")
+        } else {
+            alert("Error, a user with that name does not exist.")
+        }
     });
     return data;
 }
 
-function setUserAdmin(){
+function setAdmin(){
     var username = document.getElementById("setUserAdmin").value;
     let url = "/api/set/admin";
     let auth = {
@@ -133,6 +139,11 @@ function setUserAdmin(){
         body: JSON.stringify(auth)
     };
     data = fetchAsync(url, payload).then((resp) => {
+        if (resp) {
+            alert("Success!")
+        } else {
+            alert("Error, could not give that user admin status.")
+        }
     });
     return data;
 }

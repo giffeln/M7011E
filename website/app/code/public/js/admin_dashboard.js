@@ -18,18 +18,29 @@ function getData(dataToGet, estateId) {
     return data;
 }
 
-
-function setupAdminDashboard() {
-    //let url = "api.projekt.giffeln.se/estates?idEstates=";
-    let url = "/api/get/estate";
-    data = fetchAsync(url).then((resp) => {
+function setupAdminDashboard(estate){
+    let url = "api/get/userEstate";    
+    let auth = {
+        "estate": estate,
+    };
+    let payload = {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(auth)
+    };
+    data = fetchAsync(url, payload).then((resp) => {
         sessionStorage.setItem("charging", resp.batteryCharging);
         loadAdminDashboard(resp.idEstates);
-        document.getElementById("buffer").innerHTML = resp.batteryCharge;
-
+        document.getElementById("status").innerHTML = "Running";
+        document.getElementById("buffer").innerHTML = 0;
+        document.getElementById("marketPrice").innerHTML = 100;
     });
-    return true;
+    return data;
 }
+
 
 function loadAdminDashboard(estateId) {
     getData("consumption", estateId);
@@ -68,7 +79,6 @@ function setAdminSliders() {
 }
 
 function resetAdminSliders() {
-    //charging = (sessionStorage.getItem("charging") * 100);
     document.getElementById("plantProdSlider").value = 0;
     document.getElementById("saveSliderValue").innerHTML = 0;
     document.getElementById("plantBatterySlider").value = 0;

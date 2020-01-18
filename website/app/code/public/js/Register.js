@@ -1,16 +1,15 @@
 var url = "/api/register";
 
-
 async function fetchAsync(api, load) {
     let response = await fetch(api, load);
     let data = await response.json();
     return data;
 }
+
 function register() {
     username = document.getElementById("Username").value;
     password = document.getElementById("Password").value;
     passwordCheck = document.getElementById("RepeatPassword").value;
-    console.log(admin);
     let auth = {
         "anv": username,
         "pass": password,
@@ -26,15 +25,10 @@ function register() {
     };
     if (password === passwordCheck) {
         fetchAsync(url, payload).then((resp) => {
-            console.log(resp);
             if (resp) {
-                window.location.pathname = ''
+                window.location.pathname = '/login.html'
             } else {
                 alert("Passwords must match");
             }
         });
-    } else {
-        console.log("error");
-    }
-}
-
+}}

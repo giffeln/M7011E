@@ -37,7 +37,6 @@ function login() {
 
 function checkLogin() {
     let url = "/api/auth";
-    console.log(url)
 
     async function fetchAsync(url) {
         let response = await fetch(url);
@@ -72,8 +71,3 @@ function setSession(){
         window.location.pathname = ''
     });
 }
-
-function logData() {
-    console.log(username + ";" + password);
-}
-

@@ -104,8 +104,8 @@ app.get("/get/estate", login.verify, (req, res) => {
     }
 });
 
-app.get("/get/userEstate", login.verifyAdmin, (req, res) => {
-    let estate = req.body.user;
+app.post("/get/userEstate", login.verifyAdmin, (req, res) => {
+    let estate = req.body.estate;
     if(!estate) { res.json(false); }
     else {
         other.getEstate(estate).then((estateData) => {
@@ -134,6 +134,20 @@ app.get("/get/users", login.verifyAdmin, (req, res) => {
     other.getUsers().then((users) => {
         if(users) {
             res.json(users);
+        } else {
+            res.json(false);
+        }
+    }).catch((err) => {
+        console.log(err);
+        res.json(false);
+    });
+});
+
+app.post("/get/specificUser", login.verifyAdmin, (req, res) => {
+    let username = req.body.username;
+    other.getUser(username).then((user) => {
+        if(user) {
+            res.json(user);
         } else {
             res.json(false);
         }

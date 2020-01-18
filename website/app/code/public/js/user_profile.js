@@ -5,7 +5,6 @@ async function fetchAsync(api, load) {
 }
 
 function setUserCharge() {
-    console.log("fired 2.0")
     var amount = parseInt(document.getElementById("saveSlider").value);
     let url = "/api/set/charging";
     let auth = {
@@ -20,7 +19,6 @@ function setUserCharge() {
         body: JSON.stringify(auth)
     };
     data = fetchAsync(url, payload).then((resp) => {
-        console.log(resp);
     });
     return data;
 }
@@ -42,7 +40,6 @@ function getData(dataToGet, estateId) {
 
 function setupUserDashboard() {
     let url = "/api/get/estate";
-    console.log(url)
     data = fetchAsync(url).then((resp) => {
         sessionStorage.setItem("charging", resp.batteryCharging);
         loadUserDashboard(resp.idEstates);

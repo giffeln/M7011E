@@ -83,6 +83,17 @@ module.exports = {
             });
         });
     },
+    getUser: async function(username) {
+        return new Promise(async (resolve, reject) => {
+            let sql = "SELECT idUsers, username, estate, admin FROM Users WHERE username='" + username + "';"
+            query(sql).then((table) => {
+                resolve(table);
+            }).catch((err) => {
+                console.log(err);
+                reject(false);
+            });
+        });
+    },
     setCharging: async function(charging, token) {
         return new Promise(async (resolve, reject) => {
             console.log("charging: " + charging);
@@ -170,7 +181,7 @@ async function getEstates() {
         let url = root + "/estates";
         let method = "GET";
         webrequest(method, url, {}).then((estateData) => {
-            //console.log(estateData);
+            console.log(estateData);
             resolve(estateData);
         }).catch((err) => {
             console.log(err);

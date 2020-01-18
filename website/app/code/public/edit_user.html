@@ -31,10 +31,21 @@
             </div>
             <div class="card shadow mb-4 card-tableCell30">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Set a user estate</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">User settings</h6>
                 </div>
                 <div class="card-body">
+                    <div class="text">Upload admin photo: </div>
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="adminPhotoInput">
+                          <label class="custom-file-label" for="adminPhotoInput" aria-describedby="inputFile">Choose photo</label>
+                        </div>
+                        <div class="input-group-append">
+                          <span class="input-group-text" id="adminPhotoUpload">Upload</span>
+                        </div>
+                      </div>
                     <form class="user">
+                        <div class="text">Set user estate</div>
                         <div class="form-group">
                             <input type="text" class="form-control form-control-user" id="userId"
                                 aria-describedby="Username" placeholder="User id" required>
@@ -82,8 +93,8 @@
                             <input type="text" class="form-control form-control-user" id="setUserAdmin"
                                 aria-describedby="User id" placeholder="User id" required>
                         </div>
-                        <input type="button" class="btn btn-primary btn-user btn-block"
-                            onclick="setUserAdmin()" id="setAdminButton" value="Add Admin" />
+                        <input type="button" class="btn btn-primary btn-user btn-block" onclick="setAdmin()"
+                            id="setAdminButton" value="Add Admin" />
                         <hr>
                     </form>
                 </div>

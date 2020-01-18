@@ -8,7 +8,6 @@ function getDataToTable() {
     var dataToGet = document.getElementById("headerName").innerText.toLowerCase();
     let url = "https://api.projekt.giffeln.se/" + dataToGet;
     data = fetchAsync(url).then((resp) => {
-        console.log(resp)
         writeDataToTable(resp);
     });
     return data;
