@@ -36,3 +36,5 @@
 | 2020-01-14 | 3 | More functions for the frontend |
 | 2020-01-16 | 3 | Functions for frontend and sim tweaking |
 | 2020-01-17 | 2 | Sim tweaking |
+| 2020-01-17 | 4 | Finalization |
+| 2020-01-18 | 3 | Last minute bugs |
