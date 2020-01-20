@@ -2,6 +2,7 @@
 Project for the course Design of Dynamic Web Systems
 
 Starts the web app on port `8080` and the api on port `8081`
+The website will start with an admin account with the credentials `admin` `admin`
 
 ### Prerequisites
 
