@@ -22,7 +22,7 @@ module.exports = {
                 if (table.length == 1 && pass) {
                     let token = jwt.sign({"username": username, "admin": table[0]["admin"], "estate": table[0]["estate"]}, secret, {expiresIn: "1 days"});
                     resolve(token);
-                } else {
+                }  else {
                     resolve(false);
                 }
             }).catch((err) => {

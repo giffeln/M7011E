@@ -1,6 +1,9 @@
 const express = require("express");
 const login = require('./login');
 const other = require('./other');
+const Busboy = require('busboy');
+const path = require('path');
+const fs = require('fs');
 
 const app = express.Router();
 
@@ -199,6 +202,62 @@ app.post("/changePassword", login.verify, (req, res) => {
         console.log(err);
         res.json(false);
     });
+});
+
+app.post("/upload/profile", login.verify, (req, res) => {
+    let username = req.user.username;
+    var busboy = new Busboy({ headers: req.headers });
+    busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+        filename = username + "." + filename.split(".").pop().toLowerCase;
+        var saveTo = path.join(__dirname, 'photos/profile/' + filename);
+        file.pipe(fs.createWriteStream(saveTo));
+    });  
+    busboy.on('finish', function() {
+        res.writeHead(200, { 'Connection': 'close' });
+        res.end("That's all folks!");
+    });
+    return req.pipe(busboy);
+});
+
+app.post("/upload/house", login.verify, (req, res) => {
+    let username = req.user.username;
+    var busboy = new Busboy({ headers: req.headers });
+    busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+        filename = username + "." + filename.split(".").pop().toLowerCase;
+        var saveTo = path.join(__dirname, 'photos/house/' + filename);
+        file.pipe(fs.createWriteStream(saveTo));
+    });  
+    busboy.on('finish', function() {
+        res.writeHead(200, { 'Connection': 'close' });
+        res.end("That's all folks!");
+    });
+    return req.pipe(busboy);
+});
+
+app.get("/get/house", login.verify, (req, res) => {
+    let admin = req.user.admin;
+    let username;
+    if(admin == 1 && req.body.hasOwnProperty("username")) {
+        username = req.body.username;
+    } else {
+        username = req.user.username;
+    }
+    let pathed = path.join(__dirname, 'photos/house/' + username + ".png");
+    console.log(pathed);
+    res.sendFile(pathed, {"headers": {'Content-Type': 'image/png'}});
+});
+
+app.get("/get/profile", login.verify, (req, res) => {
+
+})
+
+app.get("/test", (req, res) => {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('<form action="upload/house" method="post" enctype="multipart/form-data">');
+    res.write('<input type="file" name="filetoupload"><br>');
+    res.write('<input type="submit">');
+    res.write('</form>');
+    return res.end();
 });
 
 module.exports = app;
