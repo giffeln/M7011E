@@ -135,7 +135,7 @@ module.exports = {
         estates.forEach(estate => {
             if(estate.size == 0) {
                 powerplant = estate;
-                break;
+                return;
             }
         });
         return powerplant;
