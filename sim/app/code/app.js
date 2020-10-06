@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const query = require('./private/query');
 const cookieParser = require('cookie-parser');
 const mariadb = require("mariadb");
+const sim = require("./private/sim")
 const pool = mariadb.createPool({
     host: "sim_db",
     user: "node",
