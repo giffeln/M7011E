@@ -93,7 +93,7 @@ module.exports = {
         try {
             const verified = jwt.verify(token, secret);
             req.user = verified;
-            console.log(req.user);
+            //console.log(req.user);
             if(req.user.admin == 1) {
                 next();
             }
@@ -119,7 +119,7 @@ module.exports = {
     removeUser: async function(username, token) {
         return new Promise(async (resolve, reject) => {
             let sql = "SELECT * FROM Users WHERE username = '" + username + "'";
-            console.log(sql);
+            //console.log(sql);
             query(sql).then((table) => {
                 let estate = table[0].estate;
                 let url = root + "/set/estate/reset";
@@ -139,6 +139,17 @@ module.exports = {
                 });
             }).catch((err) => {
                 console.log(err);
+                reject(false);
+            });
+        });
+    },
+    logUser: async function(username) {
+        return new Promise(async (resolve, reject) => {
+            let sql = 'UPDATE Users SET lastLogged = NOW() WHERE username = "' + username + '"';
+            query(sql).then((table) => {
+                resolve(true);
+            }).catch((err) => {
+                console.log("Error logging user: " + err);
                 reject(false);
             });
         });

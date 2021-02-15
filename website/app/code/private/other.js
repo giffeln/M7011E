@@ -9,7 +9,7 @@ const pool = mariadb.createPool({
   connectionLimit: 5
 });
 
-//const root = "http://172.24.0.3:8081"
+//const root = "http://m7011e_sim_app:8081"
 //const root = "http://localhost:8081";
 const root = "https://api.projekt.giffeln.se";
 
@@ -67,15 +67,25 @@ module.exports = {
                         availableEstates.push(estate);
                     }
                 });
-                console.log(users);
+                //console.log(users);
                 resolve(availableEstates);
             });
         });
     },
     getUsers: async function() {
         return new Promise(async (resolve, reject) => {
-            let sql = "SELECT idUsers, username, estate, admin FROM Users;"
+            let sql = "SELECT idUsers, username, estate, admin, lastLogged FROM Users;"
             query(sql).then((table) => {
+                let now = Date.now();
+                table.forEach(user => {
+                    let lastLogged = Date.parse(user.lastLogged);
+                    if(now > lastLogged + (5*60*1000)) {
+                        user.online = 0;
+                    } else {
+                        user.online = 1;
+                    }
+                    delete user.lastLogged;
+                });
                 resolve(table);
             }).catch((err) => {
                 console.log(err);
@@ -181,7 +191,7 @@ async function getEstates() {
         let url = root + "/estates";
         let method = "GET";
         webrequest(method, url, {}).then((estateData) => {
-            console.log(estateData);
+            //console.log(estateData);
             resolve(estateData);
         }).catch((err) => {
             console.log(err);

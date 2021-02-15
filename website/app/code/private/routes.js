@@ -7,6 +7,11 @@ const fs = require('fs');
 
 const app = express.Router();
 
+app.use(login.verify, (req, res, next) => {
+    login.logUser(req.user.username);
+    next();
+});
+
 app.post("/login/", async (req, res) => {
     let username = req.body.anv;
     let password = req.body.pass;
@@ -136,6 +141,7 @@ app.get("/get/availableEstates", login.verifyAdmin, (req, res) => {
 app.get("/get/users", login.verifyAdmin, (req, res) => {
     other.getUsers().then((users) => {
         if(users) {
+            //console.log(users);
             res.json(users);
         } else {
             res.json(false);

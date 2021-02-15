@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS `web_db`.`Users` (
   `password` VARCHAR(255) NOT NULL,
   `admin` TINYINT NOT NULL DEFAULT 0,
   `estate` INT,
+  `lastLogged` TIMESTAMP,
   PRIMARY KEY (`idUsers`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC),
   UNIQUE INDEX `idUsers_UNIQUE` (`idUsers` ASC));
